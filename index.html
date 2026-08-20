@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zo Keck-Choeff ~ Portfolio</title>
+  <meta name="description" content="Three projects by Zo Keck-Choeff: generative product and architecture design, a 3D-printed clock sculpture, and a Python-generated audio work.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#work">Skip to the work</a>
+
+<header class="site-head">
+  <h1>Zo Keck-Choeff</h1>
+  <p class="role">Artist ~ Santa Barbara</p>
+
+  <nav class="site-nav" aria-label="Projects">
+    <a href="#p2046">2046</a>
+    <a href="#pbuddha">Buddha Clock</a>
+    <a href="#pdreaming">Opiate Dreaming</a>
+  </nav>
+</header>
+
+<main id="work">
+
+  <section class="project" id="p2046" aria-labelledby="h-2046">
+    <p class="project__num">01</p>
+
+    <div class="project__body">
+      <h2 id="h-2046">3 Scales of Design in 2046</h2>
+      <p class="meta">Presentation &middot; 07/30/26 &middot; MAT 10, Novak</p>
+
+      <figure>
+        <div class="deck">
+          <iframe src="media/2046_01.html"
+                  title="3 Scales of Design in 2046 ~ presentation showing the three final designs"
+                  loading="lazy"></iframe>
+        </div>
+        <figcaption>
+          The presentation, embedded and running from the
+          <code>media/</code> folder &mdash; scroll inside the frame,
+          or <a href="media/2046_01.html">open it full-size</a>.
+        </figcaption>
+      </figure>
+
+      <p class="abstract">
+        This presentation also acts as a portfolio, showcasing the 3 final products that I reached after using a unique generative process. This process inspired the forms of the products and structures using an iterative technique in supercraft.ai, where I started without any preconceived notions of what I wanted to make, instead taking inspiration from nature, culture, and formal shapes. This was made to explore creating architecture as well as product design.
+      </p>
+    </div>
+  </section>
+
+  <section class="project" id="pbuddha" aria-labelledby="h-buddha">
+    <p class="project__num">02</p>
+
+    <div class="project__body">
+      <h2 id="h-buddha">Buddha Clock Concept</h2>
+      <p class="meta">Sculpture &middot; 07/31/26 &middot; MAT 111FS, Manoudaki</p>
+
+      <figure>
+        <img src="media/buddha_01.jpeg"
+             alt="A 3D-printed seated Buddha figure anchored to a flat surface, cantilevering a printed housing that holds a working analog clock face out over the edge.">
+        <figcaption>The finished sculpture: printed parts assembled, clock running on a AA battery.</figcaption>
+      </figure>
+
+      <p class="abstract">
+        This concept features a fully working clock with hour and minute hands, powered by a double A battery. It started off as a sketch of a random shape and then the idea of wanting to make a clock. From there I was drawing and generating different clocks until I created a sketch that I liked. I used a program to convert my sketch into a 3d stl file. This allowed me to create the arms of the clock. These arms as well as a buddha state were 3d printed to connect to a main 3d printed housing. The buddha was made in the same program, then sculpted and shaped to be the main anchor as it tapes/attaches down to a surface while holding the clock off of the side. This was made to explore my creativity, furniture design, 3d printing, and make something functional.
+      </p>
+    </div>
+  </section>
+
+  <section class="project" id="pdreaming" aria-labelledby="h-dreaming">
+    <p class="project__num">03</p>
+
+    <div class="project__body">
+      <h2 id="h-dreaming">Opiate Dreaming Song Generator</h2>
+      <p class="meta">Audio &middot; 08/03/26 &middot; MAT 111MC, Millett</p>
+
+      <figure>
+        <audio controls preload="metadata" src="media/dreaming_01.wav">
+          Your browser cannot play audio inline.
+          <a href="media/dreaming_01.wav">Download the track (WAV).</a>
+        </audio>
+        <figcaption>Generated audio, played from the local file. Based on Maxon Margiela&rsquo;s <em>Opiate Dreaming</em>.</figcaption>
+      </figure>
+
+      <p class="abstract">
+        This audio allows the audience to listen to a generated song using python code and specialized coded instruments. Although it was originally supposed to be based on the beat of Maxon Margiela's Opiate Dreaming, hence the title, it doesn't really sound similar. This work is a beat/rhythm that was made to recreate the feeling of listening to the chosen inspiration song and was done so with the help of klotho notebooks, claude code, and a folder for the agent.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Zo Keck-Choeff ~ <a href="mailto:zo81@ucsb.edu">zo81@ucsb.edu</a> ~ 2026</p>
+</footer>
+
+<script>
+/* Fit the presentation to the column.
+   The deck is a fixed 1104 x 816px document that does not reflow,
+   so it is scaled rather than resized ~ see the .deck block in
+   style.css. This keeps one whole slide visible at any window
+   width. Nothing else on the page depends on script. */
+(function () {
+  var frame = document.querySelector('.deck');
+  if (!frame) return;
+
+  function fit() {
+    frame.style.setProperty('--deck-scale', frame.clientWidth / 1104);
+  }
+
+  fit();
+  if (window.ResizeObserver) {
+    new ResizeObserver(fit).observe(frame);
+  } else {
+    window.addEventListener('resize', fit);
+  }
+})();
+</script>
+
+</body>
+</html>

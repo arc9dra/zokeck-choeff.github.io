@@ -1,0 +1,373 @@
+/* ============================================================
+   Zo Keck-Choeff ~ portfolio
+   MAT 189, Summer 2026 ~ Assignment 2, Part 2
+
+   DESIGN DIRECTION: Swiss / International Style.
+   Strict grid, one grotesque typeface, generous whitespace,
+   asymmetric layout, hairline rules, near-zero decoration.
+   The work is the content; the page is a frame that gets out
+   of its way (Tufte: show the data).
+
+   Everything below is built from TOKENS declared in :root ~
+   five colors, one type scale, one spacing scale. Nothing is
+   a one-off value. Change a token, the whole site changes.
+   ============================================================ */
+
+:root {
+  /* --- palette as a system (5 colors, 60/30/10) ------------
+     paper 60% ~ ink 30% ~ accent 10%.
+     Contrast ratios against --paper, computed, not guessed:
+       ink    #111111 on #f4f3ef = 17.01:1  (passes AAA)
+       muted  #5c5c5c on #f4f3ef =  6.02:1  (passes AA)
+       accent #c2181f on #f4f3ef =  5.49:1  (passes AA)
+       rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
+              never text ~ it is not required to pass)
+     Swiss red is the accent because this tradition earned it
+     (Muller-Brockmann, Bill, the Zurich posters) ~ it is a
+     citation, not a decoration.                              */
+  --paper:  #f4f3ef;
+  --ink:    #111111;
+  --muted:  #5c5c5c;
+  --rule:   #c9c7c0;
+  --accent: #c2181f;
+
+  /* --- type scale, 1.25 ratio from a 16px base -------------
+     16 / 20 / 25 / 31 / 39 / 49 / 61. Sizes are related by a
+     ratio, not picked by eye. The scale IS the hierarchy.
+     The page uses four of these steps and no others:
+     name (t-6), project title (t-4), body (t-0), meta (micro). */
+  --t-0: 1rem;
+  --t-1: 1.25rem;
+  --t-2: 1.563rem;
+  --t-3: 1.953rem;
+  --t-4: 2.441rem;
+  --t-5: 3.052rem;
+  --t-6: 3.815rem;
+  --t-micro: 0.8125rem;
+
+  /* --- spacing scale, 8px base ----------------------------- */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+
+  /* --- type ------------------------------------------------
+     A grotesque stack, NOT a web font. This site has to open
+     offline by double-clicking index.html; a Google Fonts
+     link would fail with the wifi down and fall back to
+     something unchosen. Helvetica is also the correct
+     typeface for this tradition, so the constraint and the
+     design decision agree.                                   */
+  --font: "Helvetica Neue", Helvetica, Arial, "Inter",
+          system-ui, -apple-system, sans-serif;
+
+  --measure: 68ch;      /* line length, held to 45-75 chars */
+  --page:    68rem;     /* the centered column               */
+
+  /* lets the browser render native controls (the audio player,
+     scrollbars) in the matching scheme instead of a white pill
+     floating on a dark page */
+  color-scheme: light dark;
+}
+
+/* --- dark mode: a SECOND designed palette, not an inversion.
+   Same five token names, re-chosen by hand. Pure white on
+   pure black is harsh, so ink softens to #ecebe6 (15.70:1)
+   and the red lightens to #ff6259 (6.38:1) to stay legible
+   on a dark ground ~ the light-mode #c2181f drops to 3.1:1
+   against #121211 and would fail AA.                        */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #121211;
+    --ink:    #ecebe6;
+    --muted:  #a09d97;
+    --rule:   #34332f;
+    --accent: #ff6259;
+  }
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: var(--s-4) var(--s-3) var(--s-7);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--t-0);
+  line-height: 1.6;                 /* leading, loosened from 1.5 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* one centered column for the whole page */
+header, main, footer {
+  max-width: var(--page);
+  margin-inline: auto;
+}
+
+/* every link and button gets a VISIBLE focus ring ~ keyboard
+   users are a design audience, not an afterthought */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* skip link: present for screen readers and keyboard, out of
+   the way for everyone else */
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  position: static;
+  display: inline-block;
+  margin-bottom: var(--s-2);
+  color: var(--accent);
+}
+
+/* ============================================================
+   HEADER ~ the asymmetric block
+   ============================================================ */
+
+.site-head {
+  padding-block: var(--s-5) var(--s-4);
+  border-bottom: 1px solid var(--ink);   /* the heavy rule */
+}
+
+.site-head h1 {
+  margin: 0;
+  /* fluid type: scales smoothly with the viewport instead of
+     jumping at a breakpoint */
+  font-size: clamp(var(--t-4), 8vw, var(--t-6));
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.025em;   /* tighten tracking on display size */
+}
+
+.site-head .role {
+  margin: var(--s-2) 0 0;
+  max-width: var(--measure);
+  color: var(--muted);
+  font-size: var(--t-0);
+}
+
+/* ============================================================
+   NAV ~ 3 links, one line, no ornament
+   ============================================================ */
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+.site-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;     /* tracking opens up small caps */
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--rule);
+  transition: color 200ms ease-out, border-color 200ms ease-out;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ============================================================
+   PROJECTS ~ small multiples on a two-column grid
+   The frame is identical every time; only the work varies.
+   That sameness is what makes the differences legible.
+   ============================================================ */
+
+.project {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  column-gap: var(--s-3);
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--rule);   /* hairline, repeated  */
+  scroll-margin-top: var(--s-3);
+}
+
+.project:first-of-type { border-top: none; }
+
+/* the number gutter ~ what makes the layout asymmetric */
+.project__num {
+  grid-column: 1;
+  margin: 0;
+  color: var(--accent);
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.55rem;    /* optically aligns to the h2 cap  */
+}
+
+.project__body { grid-column: 2; }
+
+.project h2 {
+  margin: 0;
+  font-size: var(--t-4);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.project .meta {
+  margin: var(--s-1) 0 0;
+  color: var(--muted);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.project .abstract {
+  margin: var(--s-3) 0 0;
+  max-width: var(--measure);   /* the measure, enforced */
+}
+
+/* ============================================================
+   FIGURES
+   ============================================================ */
+
+figure {
+  margin: var(--s-4) 0 0;
+}
+
+/* The image keeps ITS OWN proportion ~ width is fixed to the
+   column, height follows. An earlier version forced every image
+   into a 3:2 frame with object-fit: cover, which is fine in the
+   abstract but here it cropped 11% off the top and bottom of a
+   4:3 (5712x4284) photograph ~ cutting the rays off the top of
+   the clock and the base off the bottom. Cropping the work to
+   fit the frame is a graphical-integrity problem: the frame
+   should report the object, not edit it. So the frame gives up
+   its fixed ratio instead of the sculpture giving up its edges.
+   Small multiples still hold ~ same column width, same hairline
+   border, same caption treatment on every project. */
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--rule);   /* shows as an empty frame if a file is missing */
+  border: 1px solid var(--rule);
+}
+
+/* --- the embedded presentation ---------------------------------
+   The deck is a bundled export of a slide document: 14 fixed
+   pages, each exactly 1056x816px (11 x 8.5in at 96dpi), and it
+   does NOT reflow ~ measured identical at 600px, 1008px and
+   1400px of available width. It needs 1104px to lay out.
+   Making the iframe narrower does not help, because an iframe
+   crops its document, it does not zoom it. So: the frame takes
+   the slide's real proportion, the iframe is given the 1104x816
+   it actually wants, and the whole thing is SCALED to whatever
+   the column happens to be. One entire slide, always, at any
+   window size ~ instead of a slide clipped at the right edge.
+   --deck-scale is set by the script at the bottom of index.html.
+   Relying on script here costs nothing: the presentation is
+   itself a JavaScript bundle and cannot render without it.     */
+.deck {
+  --deck-scale: 1;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1104 / 816;    /* one slide, letter landscape */
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.deck iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1104px;
+  height: 816px;
+  border: 0;
+  transform: scale(var(--deck-scale));
+  transform-origin: top left;
+}
+
+figure audio {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--s-1);
+}
+
+figcaption {
+  margin-top: var(--s-2);
+  color: var(--muted);
+  font-size: var(--t-micro);
+  max-width: var(--measure);
+}
+
+figcaption a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-foot {
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: var(--t-micro);
+}
+
+.site-foot p { margin: 0; }
+
+.site-foot a {
+  color: var(--muted);
+  text-underline-offset: 3px;
+}
+
+.site-foot a:hover { color: var(--accent); }
+
+/* ============================================================
+   BREAKPOINT ~ below 768px the number gutter collapses and
+   the grid becomes one column. Touch targets stay >= 44px.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  body { padding: var(--s-3) var(--s-3) var(--s-6); }
+
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--s-1);
+    padding-block: var(--s-5);
+  }
+
+  .project__num,
+  .project__body { grid-column: 1; }
+
+  .project__num { padding-top: 0; }
+
+  .site-nav { gap: var(--s-2) var(--s-3); }
+
+  .site-nav a {
+    padding-block: 0.7rem;     /* 44px touch target */
+  }
+}
+
+/* respect the visitor's motion setting */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; }
+}
