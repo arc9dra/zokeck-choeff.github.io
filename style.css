@@ -1,6 +1,6 @@
 /* ============================================================
-   Zo Keck-Choeff ~ portfolio
-   MAT 189, Summer 2026 ~ Assignment 2, Part 2
+   Zo Keck-Choeff - portfolio
+   MAT 189, Summer 2026 - Assignment 2, Part 2
 
    DESIGN DIRECTION: Swiss / International Style.
    Strict grid, one grotesque typeface, generous whitespace,
@@ -8,22 +8,23 @@
    The work is the content; the page is a frame that gets out
    of its way (Tufte: show the data).
 
-   Everything below is built from TOKENS declared in :root ~
+   Everything below is built from TOKENS declared in :root -
    five colors, one type scale, one spacing scale. Nothing is
    a one-off value. Change a token, the whole site changes.
+   Only tokens the page actually uses are declared.
    ============================================================ */
 
 :root {
   /* --- palette as a system (5 colors, 60/30/10) ------------
-     paper 60% ~ ink 30% ~ accent 10%.
+     paper 60% - ink 30% - accent 10%.
      Contrast ratios against --paper, computed, not guessed:
        ink    #111111 on #f4f3ef = 17.01:1  (passes AAA)
        muted  #5c5c5c on #f4f3ef =  6.02:1  (passes AA)
        accent #c2181f on #f4f3ef =  5.49:1  (passes AA)
        rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
-              never text ~ it is not required to pass)
+              never text - it is not required to pass)
      Swiss red is the accent because this tradition earned it
-     (Muller-Brockmann, Bill, the Zurich posters) ~ it is a
+     (Muller-Brockmann, Bill, the Zurich posters) - it is a
      citation, not a decoration.                              */
   --paper:  #f4f3ef;
   --ink:    #111111;
@@ -32,19 +33,15 @@
   --accent: #c2181f;
 
   /* --- type scale, 1.25 ratio from a 16px base -------------
-     16 / 20 / 25 / 31 / 39 / 49 / 61 / 76. Sizes are related
-     by a ratio, not picked by eye. The scale IS the hierarchy.
-     The page uses four steps and no others: name (t-7),
-     project title (t-4), body (t-0), meta (micro).           */
-  --t-0: 1rem;
-  --t-1: 1.25rem;
-  --t-2: 1.563rem;
-  --t-3: 1.953rem;
-  --t-4: 2.441rem;
-  --t-5: 3.052rem;
-  --t-6: 3.815rem;
-  --t-7: 4.768rem;
-  --t-micro: 0.8125rem;
+     The full ramp is 16 / 20 / 25 / 31 / 39 / 49 / 61 / 76.
+     The page uses four steps from it and no other sizes, so
+     only those four are declared: body, meta, project title,
+     name. Sizes are related by a ratio, not picked by eye -
+     the scale IS the hierarchy.                              */
+  --t-body:  1rem;       /* step 0  - 16px */
+  --t-micro: 0.8125rem;  /* below the ramp, for meta labels */
+  --t-title: 2.441rem;   /* step 4  - 39px */
+  --t-name:  4.768rem;   /* step 7  - 76px */
 
   /* --- spacing scale, 8px base ----------------------------- */
   --s-1: 0.5rem;
@@ -71,13 +68,12 @@
   /* --- the backdrop drawing --------------------------------
      Opacity is a token so the drawing can be tuned or killed
      from one line. It has to stay low enough that it never
-     competes with the work ~ if you can read it as a picture
+     competes with the work - if you can read it as a picture
      instead of a texture, it is too strong.                  */
   --draw-opacity: 0.055;
 
-  /* lets the browser render native controls (the audio player,
-     scrollbars) in the matching scheme instead of a white pill
-     floating on a dark page */
+  /* lets the browser render native controls and scrollbars in
+     the matching scheme instead of a white box on a dark page */
   color-scheme: light dark;
 }
 
@@ -85,7 +81,7 @@
    Same five token names, re-chosen by hand. Pure white on
    pure black is harsh, so ink softens to #ecebe6 (15.70:1)
    and the red lightens to #ff6259 (6.38:1) to stay legible
-   on a dark ground ~ the light-mode #c2181f drops to 3.1:1
+   on a dark ground - the light-mode #c2181f drops to 3.1:1
    against #121211 and would fail AA.                        */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -113,9 +109,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: var(--t-0);
+  font-size: var(--t-body);
   line-height: 1.6;                 /* leading, loosened from 1.5 */
-  -webkit-font-smoothing: antialiased;
 }
 
 /* one centered column for the whole page */
@@ -124,10 +119,9 @@ header, main, footer {
   margin-inline: auto;
 }
 
-/* every link and button gets a VISIBLE focus ring ~ keyboard
-   users are a design audience, not an afterthought */
-a:focus-visible,
-button:focus-visible {
+/* every link gets a VISIBLE focus ring - keyboard users are a
+   design audience, not an afterthought */
+a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -146,11 +140,11 @@ button:focus-visible {
 }
 
 /* ============================================================
-   THE BACKDROP ~ an axonometric architectural line drawing
+   THE BACKDROP - an axonometric architectural line drawing
    Fixed behind everything, drawn in the ink color, held at
-   ~5% opacity so it reads as paper texture rather than as an
+   about 5% opacity so it reads as paper texture, not as an
    image. It is a drawing of buildings because the work on
-   this page is about designing objects and structures ~ it
+   this page is about designing objects and structures - it
    is not stock ornament, and it is the only decorative
    element on the site.
    ============================================================ */
@@ -182,7 +176,7 @@ button:focus-visible {
   stroke-linejoin: round;
 }
 
-/* the floor lines inside each volume ~ the repetition that
+/* the floor lines inside each volume - the repetition that
    makes a box read as a building */
 .backdrop .vol polyline {
   fill: none;
@@ -191,7 +185,7 @@ button:focus-visible {
 }
 
 /* ============================================================
-   HEADER ~ the asymmetric block
+   HEADER
    ============================================================ */
 
 .site-head {
@@ -203,7 +197,7 @@ button:focus-visible {
   margin: 0;
   /* fluid type: scales smoothly with the viewport instead of
      jumping at a breakpoint */
-  font-size: clamp(var(--t-4), 11vw, var(--t-7));
+  font-size: clamp(var(--t-title), 11vw, var(--t-name));
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.035em;   /* tighten tracking on display size */
@@ -211,13 +205,11 @@ button:focus-visible {
 
 .site-head .role {
   margin: var(--s-2) 0 0;
-  max-width: var(--measure);
   color: var(--muted);
-  font-size: var(--t-0);
 }
 
 /* ============================================================
-   NAV ~ 3 links, one line, no ornament
+   NAV - 3 links, one line, no ornament
    ============================================================ */
 
 .site-nav {
@@ -244,14 +236,14 @@ button:focus-visible {
 }
 
 /* ============================================================
-   PROJECTS ~ small multiples on a two-column grid
+   PROJECTS - small multiples on a two-column grid
    The frame is identical every time; only the work varies.
    That sameness is what makes the differences legible.
 
    The asymmetry comes from the meta column: a narrow left
    band carrying medium / date / course, against a wide
-   content column. Reads like a specimen sheet or a museum
-   wall label, which is what it is.
+   content column. Reads like a museum wall label, which is
+   what it is.
    ============================================================ */
 
 .project {
@@ -265,7 +257,7 @@ button:focus-visible {
 
 .project:first-of-type { border-top: none; }
 
-/* the meta band ~ stacked, uppercase, quiet */
+/* the meta band - stacked, uppercase, quiet */
 .project__meta {
   grid-column: 1;
   margin: 0;
@@ -280,7 +272,7 @@ button:focus-visible {
   padding-top: 0.75rem;    /* optically aligns to the h2 cap  */
 }
 
-/* the medium gets the accent ~ the one place color enters the
+/* the medium gets the accent - the one place color enters the
    project rows, and it is carrying information */
 .project__meta .medium { color: var(--accent); font-weight: 700; }
 
@@ -288,7 +280,7 @@ button:focus-visible {
 
 .project h2 {
   margin: 0;
-  font-size: var(--t-4);
+  font-size: var(--t-title);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -307,26 +299,40 @@ figure {
   margin: var(--s-3) 0 0;
 }
 
-/* aspect-ratio + object-fit: cover means images CROP instead
-   of stretching. A 5712x4284 photo and a 1274x921 render sit
-   in the same frame without either one being distorted. */
+/* Default: the whole image, at its own proportions. Nothing is
+   cropped unless cropping is asked for by name, below. */
 figure img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  background: var(--rule);
+  height: auto;
   border: 1px solid var(--rule);
+}
+
+/* The one deliberate crop on the site. buddha_01 carries EXIF
+   orientation 6, so the browser presents it as a 3:4 portrait
+   - 1173px tall in this column, with the top quarter bare
+   wall. Squaring it trims 25% of the height, and pushing
+   object-position down to 78% takes most of that off the top
+   rather than the middle, so the whole sunburst, the hands,
+   the green Buddha behind, and the plinth all survive.
+   object-fit: cover crops rather than distorting - a stretched
+   photograph would be a graphical-integrity problem, not just
+   an ugly one. */
+figure img.crop {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 78%;
 }
 
 /* --- the embedded presentation ---------------------------
    The iframe lives inside a scroll container. iOS Safari
    ignores an iframe's own height and renders it at full
    content height; giving the WRAPPER the height and the
-   overflow is what lets a finger scroll it. */
-/* square, because that is the ratio at which the presentation's
-   own title card lands fully inside the frame ~ the embed
-   identifies itself instead of showing a cropped photograph */
+   overflow is what lets a finger scroll it.
+   Square, because that is the ratio at which the
+   presentation's own title card lands fully inside the frame,
+   so the embed identifies itself instead of showing a
+   cropped photograph. */
 .embed {
   aspect-ratio: 1 / 1;
   overflow: auto;
@@ -350,8 +356,6 @@ figure img {
    we do not ask for one. */
 .embed-open { display: none; }
 
-.embed-open img { aspect-ratio: 4 / 3; }
-
 .embed-open .label {
   display: block;
   margin-top: var(--s-1);
@@ -361,10 +365,21 @@ figure img {
   letter-spacing: 0.1em;
 }
 
-figure audio {
-  display: block;
-  width: 100%;
-  margin-bottom: var(--s-1);
+/* --- placeholder for work not yet documented -------------
+   A dashed frame, so an unfinished section reads as
+   deliberately unfinished rather than as a broken image.
+   Square, like the other two project frames - the point of
+   small multiples is that the frame never changes. */
+.pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--rule);
+  color: var(--muted);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 figcaption {
@@ -400,7 +415,7 @@ figcaption a {
 .site-foot a:hover { color: var(--accent); }
 
 /* ============================================================
-   BREAKPOINT ~ below 768px the meta band moves above the
+   BREAKPOINT - below 768px the meta band moves above the
    title, the grid becomes one column, and the embed is
    swapped for a tap target. Touch targets stay >= 44px.
    ============================================================ */
@@ -427,11 +442,9 @@ figcaption a {
   .embed      { display: none; }
   .embed-open { display: block; }
 
-  .site-nav { gap: var(--s-2) var(--s-3); }
-
   .site-nav a { padding-block: 0.7rem; }   /* 44px touch target */
 
-  /* the drawing gets busy on a small viewport ~ pull it back */
+  /* the drawing gets busy on a small viewport - pull it back */
   :root { --draw-opacity: 0.04; }
 }
 
