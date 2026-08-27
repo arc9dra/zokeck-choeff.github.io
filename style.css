@@ -365,7 +365,11 @@ figure img {
   display: flex;
   gap: var(--s-2);
   margin: 0;
-  padding: 0 0 var(--s-2);
+  /* No bottom padding: it would push the description 16px further
+     from the drawings than the other two projects have it, and the
+     gap under an image should read the same in every section. On
+     macOS the scrollbar overlays and costs no space anyway. */
+  padding: 0;
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
