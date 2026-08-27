@@ -20,17 +20,23 @@
      Contrast ratios against --paper, computed, not guessed:
        ink    #111111 on #f4f3ef = 17.01:1  (passes AAA)
        muted  #5c5c5c on #f4f3ef =  6.02:1  (passes AA)
-       accent #c2181f on #f4f3ef =  5.49:1  (passes AA)
+       accent #7048c9 on #f4f3ef =  5.47:1  (passes AA)
        rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
               never text - it is not required to pass)
-     Swiss red is the accent because this tradition earned it
-     (Muller-Brockmann, Bill, the Zurich posters) - it is a
-     citation, not a decoration.                              */
+     The accent is lavender. It carries every piece of colour
+     on the page - the medium label, link hovers, the focus
+     ring - so it has to pass AA as text, which is why the
+     LIGHT mode value is a deep lavender rather than a pale
+     one: a genuinely light lavender lands near 1.7:1 on this
+     paper and is unreadable. Dark mode gets the pale version,
+     where it works. 5.47:1 is deliberately the same weight
+     the previous red carried (5.49:1), so swapping the hue
+     changed the colour without changing the emphasis.        */
   --paper:  #f4f3ef;
   --ink:    #111111;
   --muted:  #5c5c5c;
   --rule:   #c9c7c0;
-  --accent: #c2181f;
+  --accent: #7048c9;
 
   /* --- type scale, 1.25 ratio from a 16px base -------------
      The full ramp is 16 / 20 / 25 / 31 / 39 / 49 / 61 / 76.
@@ -86,16 +92,17 @@
 /* --- dark mode: a SECOND designed palette, not an inversion.
    Same five token names, re-chosen by hand. Pure white on
    pure black is harsh, so ink softens to #ecebe6 (15.70:1)
-   and the red lightens to #ff6259 (6.38:1) to stay legible
-   on a dark ground - the light-mode #c2181f drops to 3.1:1
-   against #121211 and would fail AA.                        */
+   and the accent becomes the pale lavender #c6adff (9.66:1),
+   which is the colour light mode cannot use - on near-white
+   paper it falls to about 1.7:1. Each mode gets the version
+   of the hue that is legible on its own ground.             */
 @media (prefers-color-scheme: dark) {
   :root {
     --paper:  #121211;
     --ink:    #ecebe6;
     --muted:  #a09d97;
     --rule:   #34332f;
-    --accent: #ff6259;
+    --accent: #c6adff;
     /* line art needs slightly more presence on a dark ground */
     --draw-opacity: 0.075;
   }
