@@ -69,6 +69,7 @@
           system-ui, -apple-system, sans-serif;
 
   --upright-max: 36.4%;   /* upright photos - see .upright */
+  --strip-h:     24rem;   /* filmstrip cards: one shared height */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
@@ -361,8 +362,12 @@ figure img {
 
 /* --- the filmstrip -------------------------------------------------
    The three companion drawings scroll horizontally and snap, one sheet
-   at a time. Each card takes most of the column so the line work stays
-   readable, and the next sheet peeks in at the edge as the affordance.  */
+   at a time. The three sheets were photographed at slightly different
+   distances, so at a shared WIDTH they came out three different heights
+   and the strip read as ragged. Sizing by HEIGHT instead levels them:
+   each card is --strip-h tall and takes whatever width its own
+   proportion needs. Nothing is cropped to achieve it - the widths vary
+   by about 20px, which reads as even, while unequal heights did not.  */
 .strip {
   display: flex;
   gap: var(--s-2);
@@ -381,8 +386,14 @@ figure img {
 }
 
 .strip__item {
-  flex: 0 0 min(78%, 30rem);
+  flex: 0 0 auto;              /* width follows the image, not the box */
   scroll-snap-align: start;
+}
+
+/* the shared height that levels the strip */
+.strip__item img {
+  height: var(--strip-h);
+  width: auto;
 }
 
 /* --- opening a drawing at full resolution --------------------------
@@ -472,9 +483,9 @@ figure img {
     padding-top: 0;
   }
 
-  /* on a phone the filmstrip card takes nearly the full width, so
-     one drawing at a time fills the screen and the next still peeks */
-  .strip__item { flex-basis: 88%; }
+  /* on a phone the cards shrink so one drawing at a time fills the
+     screen and the next still peeks in at the edge */
+  .strip { --strip-h: 15rem; }
 
   .site-nav a { padding-block: 0.7rem; }   /* 44px touch target */
 
