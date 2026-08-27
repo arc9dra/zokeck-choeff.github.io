@@ -62,6 +62,7 @@
   --font: "Helvetica Neue", Helvetica, Arial, "Inter",
           system-ui, -apple-system, sans-serif;
 
+  --img-max: 54rem;    /* tallest an image may display */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
@@ -322,8 +323,14 @@ figure {
    cropped unless cropping is asked for by name, below. */
 figure img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  /* A portrait photograph at full column width runs taller than the
+     screen and swamps everything under it. The cap holds any image to
+     a sensible height; landscape work is already under it, so in
+     practice this only bites on the upright Buddha photo. */
+  max-height: var(--img-max);
   border: 1px solid var(--rule);
 }
 
@@ -370,8 +377,6 @@ figure img {
   display: block;
   cursor: zoom-in;
 }
-
-.zoom img { display: block; width: 100%; height: auto; }
 
 .viewer {
   display: none;
