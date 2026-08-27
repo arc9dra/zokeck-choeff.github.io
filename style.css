@@ -70,6 +70,11 @@
      from one line. It has to stay low enough that it never
      competes with the work - if you can read it as a picture
      instead of a texture, it is too strong.                  */
+  /* the backdrop tint, walked through by scroll position */
+  --glow-1: #7c4dff;   /* purple, at the top    */
+  --glow-2: #ff4d9d;   /* pink,   through the middle */
+  --glow-3: #ffc23d;   /* yellow, at the bottom */
+
   --draw-opacity: 0.055;
 
   /* lets the browser render native controls and scrollbars in
@@ -140,13 +145,12 @@ a:focus-visible {
 }
 
 /* ============================================================
-   THE BACKDROP - an axonometric architectural line drawing
-   Fixed behind everything, drawn in the ink color, held at
-   about 5% opacity so it reads as paper texture, not as an
-   image. It is a drawing of buildings because the work on
-   this page is about designing objects and structures - it
-   is not stock ornament, and it is the only decorative
-   element on the site.
+   THE BACKDROP - a field of long sweeping lines
+   Fixed behind everything and held at low opacity so it reads as
+   paper texture, not as an image. Its colour is walked from purple
+   through pink to yellow by scroll position (see below). It is the
+   only decorative element on the site; if it ever reads as a
+   picture competing with the work, turn --draw-opacity down.
    ============================================================ */
 
 .backdrop {
@@ -160,28 +164,43 @@ a:focus-visible {
   opacity: var(--draw-opacity);
 }
 
-/* the ground grid: hairline, no fill */
-.backdrop .grid polyline {
+/* the sweeping field - hairline, no fill */
+.backdrop .flow polyline,
+.backdrop .sweep polyline {
   fill: none;
   stroke: currentColor;
-  stroke-width: 0.8;
+  stroke-linecap: round;
 }
 
-/* the volumes: filled with paper so they occlude the grid
-   behind them and read as solid mass, outlined in ink */
-.backdrop .vol polygon {
-  fill: var(--paper);
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linejoin: round;
-}
+.backdrop .flow polyline { stroke-width: 0.9; }
 
-/* the floor lines inside each volume - the repetition that
-   makes a box read as a building */
-.backdrop .vol polyline {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 0.8;
+/* the bolder arcs that cut across, for depth */
+.backdrop .sweep polyline { stroke-width: 2.2; opacity: 0.75; }
+
+/* --- the colour shift ---------------------------------------------
+   The backdrop is tinted by SCROLL POSITION, not by a timer: purple at
+   the top of the page, through pink, to yellow at the bottom. Done with
+   a scroll-driven animation, so it is still zero JavaScript - the
+   timeline is the document's own scroll. Browsers without support
+   simply keep the ink colour, which is the old behaviour.            */
+@supports (animation-timeline: scroll()) {
+  @keyframes backdrop-tint {
+    0%   { color: var(--glow-1); opacity: var(--draw-opacity); }
+    50%  { color: var(--glow-2); opacity: calc(var(--draw-opacity) * 1.5); }
+    100% { color: var(--glow-3); opacity: calc(var(--draw-opacity) * 1.7); }
+  }
+
+  .backdrop {
+    /* longhands, not the shorthand: `animation:` would force
+       animation-duration to 0s, which collapses a scroll timeline to
+       nothing. A scroll-driven animation wants duration auto, so that
+       its length IS the scrollable distance. */
+    animation-name: backdrop-tint;
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+  }
 }
 
 /* ============================================================
@@ -327,21 +346,71 @@ figure img {
    deliberately unfinished rather than as a broken image.
    Kept shallow so an empty box does not outweigh the two
    finished projects above it. */
-/* --- a series in one row ----------------------------------
-   Three more drawings from the same body of work, three equal
-   columns, one identical frame each: small multiples, so the
-   only thing that changes across them is the drawing. The lead
-   image above carries the detail; this row carries the fact
-   that there is a series at all.
-   Their proportions differ by under 5% and they are still not
-   cropped to match - the uneven bottom edge is the true shape
-   of each page, and is the honest report. */
-.series {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: start;
+/* --- the filmstrip -------------------------------------------------
+   The three companion drawings scroll horizontally and snap, one sheet
+   at a time. Each card takes most of the column so the line work stays
+   readable, and the next sheet peeks in at the edge as the affordance.  */
+.strip {
+  display: flex;
   gap: var(--s-2);
+  margin: 0;
+  padding: 0 0 var(--s-2);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
 }
+
+.strip__item {
+  flex: 0 0 min(78%, 30rem);
+  scroll-snap-align: start;
+}
+
+/* --- opening a drawing at full resolution --------------------------
+   The page shows these small; the files are 4000px+ wide. Rather than
+   lose that, every drawing is a link to itself at full size. :target
+   does the whole thing - no script, and the browser Back button closes
+   it, so you can never be stranded inside a picture.                  */
+.zoom {
+  display: block;
+  cursor: zoom-in;
+}
+
+.zoom img { display: block; width: 100%; height: auto; }
+
+.viewer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  padding: var(--s-3);
+  background: var(--paper);
+  overflow: auto;
+  text-align: center;
+}
+
+.viewer:target { display: block; }
+
+.viewer img {
+  max-width: 100%;
+  height: auto;
+  margin-top: var(--s-3);
+}
+
+.viewer__close {
+  display: inline-block;
+  color: var(--ink);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  padding: var(--s-1) var(--s-2);
+  border: 1px solid var(--ink);
+}
+
+.viewer__close:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ============================================================
    FOOTER
@@ -388,10 +457,9 @@ figure img {
     padding-top: 0;
   }
 
-  /* the series drops to one column: three across at phone width
-     is about 100px each, which turns dense drawings into grey
-     squares */
-  .series { grid-template-columns: minmax(0, 1fr); }
+  /* on a phone the filmstrip card takes nearly the full width, so
+     one drawing at a time fills the screen and the next still peeks */
+  .strip__item { flex-basis: 88%; }
 
   .site-nav a { padding-block: 0.7rem; }   /* 44px touch target */
 
@@ -401,6 +469,7 @@ figure img {
 
 /* respect the visitor's motion setting */
 @media (prefers-reduced-motion: reduce) {
+  .backdrop { animation: none; }
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; }
 }
