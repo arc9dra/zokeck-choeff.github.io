@@ -343,18 +343,6 @@ figure img {
   gap: var(--s-2);
 }
 
-figcaption {
-  margin-top: var(--s-2);
-  color: var(--muted);
-  font-size: var(--t-micro);
-  max-width: var(--measure);
-}
-
-figcaption a {
-  color: var(--accent);
-  text-underline-offset: 3px;
-}
-
 /* ============================================================
    FOOTER
    ============================================================ */
