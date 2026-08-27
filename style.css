@@ -68,7 +68,7 @@
   --font: "Helvetica Neue", Helvetica, Arial, "Inter",
           system-ui, -apple-system, sans-serif;
 
-  --upright-max: 36.4%;   /* upright photos - see .upright */
+  --upright-inset: 1.25in;  /* empty margin each side of the upright photo */
   --strip-h:     24rem;   /* filmstrip cards: one shared height */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
@@ -337,16 +337,17 @@ figure img {
 }
 
 /* The one upright photograph. At full column width it stands about
-   twice as tall as anything else and swamps the page, so it is capped.
-   The cap is a percentage of the column, not a fixed size, so the
-   photo holds its proportion at every window width.
-     36.4%  - current: deliberately smaller than the other two, which
-              lets the upright shape sit quietly rather than compete
-     60.6%  - the value that makes it exactly as TALL as the 2046
-              title slide, if you ever want them level again
-   That second number is (photo w/h) / (slide w/h), so a re-crop of
-   either image means recomputing it. */
-.upright { max-width: var(--upright-max); }
+   twice as tall as anything else, so it is inset instead: a real
+   1.25in of empty page on each side, and centred in the same column
+   the 2046 slide spans. The margin is set in inches rather than a
+   percentage so it stays 1.25in at every window width - the image
+   gives up width as the column narrows, the margin does not.
+   Below the breakpoint the inset drops to zero, because 2.5in of
+   margin on a phone would leave almost nothing for the picture. */
+.upright {
+  width: calc(100% - var(--upright-inset) * 2);
+  margin-inline: auto;
+}
 
 /* --- the presentation ------------------------------------
    Its slides are laid out at a fixed 1056px wide and do not
@@ -486,6 +487,9 @@ figure img {
   /* on a phone the cards shrink so one drawing at a time fills the
      screen and the next still peeks in at the edge */
   .strip { --strip-h: 15rem; }
+
+  /* no room for a 1.25in margin either side at this width */
+  .upright { --upright-inset: 0px; }
 
   .site-nav a { padding-block: 0.7rem; }   /* 44px touch target */
 
