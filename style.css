@@ -68,7 +68,7 @@
   --font: "Helvetica Neue", Helvetica, Arial, "Inter",
           system-ui, -apple-system, sans-serif;
 
-  --upright-max: 60.6%;   /* upright photos, matched to the slide */
+  --upright-max: 36.4%;   /* upright photos - see .upright */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
@@ -335,14 +335,16 @@ figure img {
   border: 1px solid var(--rule);
 }
 
-/* The one upright photograph. Left at full column width it stands
-   about twice as tall as everything else and unbalances the page, so
-   it is held to the same DISPLAYED HEIGHT as the 2046 title slide.
-   The slide is 1320x1020 and the photo 4200x5353; at 60.6% of the
-   column those two ratios put both images at exactly the same height,
-   and they stay matched at any window width because the cap is a
-   percentage rather than a fixed size. Re-crop the photo and this
-   number needs recomputing: it is (photo w/h) / (slide w/h). */
+/* The one upright photograph. At full column width it stands about
+   twice as tall as anything else and swamps the page, so it is capped.
+   The cap is a percentage of the column, not a fixed size, so the
+   photo holds its proportion at every window width.
+     36.4%  - current: deliberately smaller than the other two, which
+              lets the upright shape sit quietly rather than compete
+     60.6%  - the value that makes it exactly as TALL as the 2046
+              title slide, if you ever want them level again
+   That second number is (photo w/h) / (slide w/h), so a re-crop of
+   either image means recomputing it. */
 .upright { max-width: var(--upright-max); }
 
 /* --- the presentation ------------------------------------
