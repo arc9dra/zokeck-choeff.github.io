@@ -331,21 +331,14 @@ figure img {
    Its slides are laid out at a fixed 1056px wide and do not
    reflow, so embedding it in this column clipped its edges at
    every width. The title slide stands in and links to the
-   file, which opens at the size it was built for. */
-.presentation .label {
+   file, which opens at the size it was built for. The whole
+   image is the link, so the cursor carries the affordance and
+   the alt text carries the destination - no label needed. */
+.presentation {
   display: block;
-  margin-top: var(--s-1);
-  color: var(--accent);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  cursor: pointer;
 }
 
-/* --- placeholder for work not yet documented -------------
-   A dashed frame, so an unfinished section reads as
-   deliberately unfinished rather than as a broken image.
-   Kept shallow so an empty box does not outweigh the two
-   finished projects above it. */
 /* --- the filmstrip -------------------------------------------------
    The three companion drawings scroll horizontally and snap, one sheet
    at a time. Each card takes most of the column so the line work stays
