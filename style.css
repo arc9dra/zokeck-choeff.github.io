@@ -327,16 +327,20 @@ figure img {
    deliberately unfinished rather than as a broken image.
    Kept shallow so an empty box does not outweigh the two
    finished projects above it. */
-.pending {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 3 / 2;
-  border: 1px dashed var(--rule);
-  color: var(--muted);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+/* --- a series in one row ----------------------------------
+   Three more drawings from the same body of work, three equal
+   columns, one identical frame each: small multiples, so the
+   only thing that changes across them is the drawing. The lead
+   image above carries the detail; this row carries the fact
+   that there is a series at all.
+   Their proportions differ by under 5% and they are still not
+   cropped to match - the uneven bottom edge is the true shape
+   of each page, and is the honest report. */
+.series {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: var(--s-2);
 }
 
 figcaption {
@@ -395,6 +399,11 @@ figcaption a {
     gap: 0 var(--s-2);
     padding-top: 0;
   }
+
+  /* the series drops to one column: three across at phone width
+     is about 100px each, which turns dense drawings into grey
+     squares */
+  .series { grid-template-columns: minmax(0, 1fr); }
 
   .site-nav a { padding-block: 0.7rem; }   /* 44px touch target */
 
