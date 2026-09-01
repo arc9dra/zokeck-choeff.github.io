@@ -318,9 +318,6 @@ a.index__row:focus-visible .index__title {
   .index__title { transition: none; }
 }
 
-/* the about line is not a link yet */
-.index__row--about { color: var(--muted); }
-
 /* ============================================================
    PAGE HEAD - the way back, on every project page
    ============================================================ */
