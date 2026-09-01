@@ -16,28 +16,28 @@
    ============================================================ */
 
 :root {
-  /* --- palette as a system (5 colors, 60/30/10) ------------
-     paper 60% - ink 30% - accent 10%.
+  /* --- palette as a system (4 colors) ----------------------
+     There is no accent any more. The page is paper, ink and
+     two greys; hover is carried by TEXTURE, not by hue - see
+     --crack below and the fracture rule further down. That
+     leaves nothing on the page competing with the work for
+     colour, which is the point.
      Contrast ratios against --paper, computed, not guessed:
        ink    #111111 on #f4f3ef = 17.01:1  (passes AAA)
        muted  #5c5c5c on #f4f3ef =  6.02:1  (passes AA)
-       accent #7048c9 on #f4f3ef =  5.47:1  (passes AA)
        rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
-              never text - it is not required to pass)
-     The accent is lavender. It carries every piece of colour
-     on the page - link hovers and the focus ring - so it has
-     to pass AA as text, which is why the
-     LIGHT mode value is a deep lavender rather than a pale
-     one: a genuinely light lavender lands near 1.7:1 on this
-     paper and is unreadable. Dark mode gets the pale version,
-     where it works. 5.47:1 is deliberately the same weight
-     the previous red carried (5.49:1), so swapping the hue
-     changed the colour without changing the emphasis.        */
+              never text - it is not required to pass)      */
   --paper:  #f4f3ef;
   --ink:    #111111;
   --muted:  #5c5c5c;
   --rule:   #c9c7c0;
-  --accent: #7048c9;
+
+  /* The two weights the fracture is drawn in: the page's own
+     ink, thinned twice. Derived from --ink rather than set as
+     their own hex, so they follow the token into dark mode
+     instead of needing second values there.                */
+  --crack:       color-mix(in srgb, var(--ink) 26%, transparent);
+  --crack-faint: color-mix(in srgb, var(--ink) 16%, transparent);
 
   /* --- type scale, 1.25 ratio from a 16px base -------------
      The full ramp is 16 / 20 / 25 / 31 / 39 / 49 / 61 / 76.
@@ -96,19 +96,16 @@
 }
 
 /* --- dark mode: a SECOND designed palette, not an inversion.
-   Same five token names, re-chosen by hand. Pure white on
-   pure black is harsh, so ink softens to #ecebe6 (15.70:1)
-   and the accent becomes the pale lavender #c6adff (9.66:1),
-   which is the colour light mode cannot use - on near-white
-   paper it falls to about 1.7:1. Each mode gets the version
-   of the hue that is legible on its own ground.             */
+   Same token names, re-chosen by hand. Pure white on pure
+   black is harsh, so ink softens to #ecebe6 (15.70:1).
+   --crack needs no entry here: it is mixed from --ink, so it
+   inverts along with it.                                    */
 @media (prefers-color-scheme: dark) {
   :root {
     --paper:  #121211;
     --ink:    #ecebe6;
     --muted:  #a09d97;
     --rule:   #34332f;
-    --accent: #c6adff;
     /* the engraving needs more presence on a dark ground */
     --draw-opacity: 0.20;
   }
@@ -145,7 +142,7 @@ header, main, footer {
 /* every link gets a VISIBLE focus ring - keyboard users are a
    design audience, not an afterthought */
 a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 
@@ -159,7 +156,7 @@ a:focus-visible {
   position: static;
   display: inline-block;
   margin-bottom: var(--s-2);
-  color: var(--accent);
+  color: var(--ink);
 }
 
 /* ============================================================
@@ -268,10 +265,7 @@ body::before {
   padding-block: var(--s-2);
   text-decoration: none;
   color: var(--ink);
-  transition: color 200ms ease-out;
 }
-
-a.index__row:hover { color: var(--accent); }
 
 .index__title {
   font-family: var(--font-display);
@@ -279,6 +273,36 @@ a.index__row:hover { color: var(--accent); }
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
+}
+
+/* --- the hover: a hairline fracture in the letterforms ------
+   The title does not change colour. Three offsets grow in
+   behind the glyphs: a firmer one up and to the left, a
+   fainter answer down and to the right, and a third further
+   left that thins out. Because they pull in RELATED
+   directions rather than ringing the glyph evenly, the edge
+   reads as split - like a plate that shifted between passes.
+   An even ring in all directions was the first attempt and it
+   just looked like a heavier weight.
+   text-shadow interpolates, so it eases in instead of
+   snapping. Focus gets it too - a keyboard user should see
+   the same thing the mouse does. */
+.index__title {
+  transition: text-shadow 220ms ease-out;
+}
+
+a.index__row:hover .index__title,
+a.index__row:focus-visible .index__title {
+  text-shadow:
+    -1.6px -1.1px 0 var(--crack),
+     1.6px  1.1px 0 var(--crack-faint),
+    -3px    0.4px 0 var(--crack-faint);
+}
+
+/* the fracture is decoration; anyone who has asked the system
+   to calm motion down gets the state without the animation */
+@media (prefers-reduced-motion: reduce) {
+  .index__title { transition: none; }
 }
 
 /* the about line is not a link yet */
@@ -301,7 +325,7 @@ a.index__row:hover { color: var(--accent); }
   transition: color 200ms ease-out, border-color 200ms ease-out;
 }
 
-.backlink:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.backlink:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 .backlink::before { content: "\2190\00a0"; }
 
@@ -424,7 +448,7 @@ figure img {
   border: 1px solid var(--ink);
 }
 
-.viewer__close:hover { color: var(--accent); border-color: var(--accent); }
+.viewer__close:hover { color: var(--ink); border-color: var(--ink); }
 
 /* ============================================================
    FOOTER - a credit, nothing more
