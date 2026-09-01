@@ -74,6 +74,28 @@
           "Avenir Next", Avenir, "Helvetica Neue", Helvetica,
           Arial, sans-serif;
 
+  /* --- the display face ------------------------------------
+     Titles only. Amatic SC is the drafting-hand register the
+     system fonts cannot reach - thin, tall and condensed, the
+     way lettering goes onto a drawing by hand. Tekton (Adobe,
+     1989, cut from architect Frank Ching's own lettering) is
+     the real article, but it is licensed and not installed
+     anywhere by default; Amatic SC is the open-licence face
+     closest to that hand.
+     This is SELF-HOSTED, not a Google Fonts link - the file
+     sits in media/ beside the photographs, so the page still
+     opens offline by double-click. The @font-face rule is
+     below the tokens. Futura leads the fallback, so a missing
+     file degrades to the body face rather than to nothing.  */
+  --font-display: "Amatic SC", Futura, "Avenir Next",
+                  "Helvetica Neue", sans-serif;
+
+  /* Amatic SC is far narrower and shorter in the eye than
+     Futura, so at the shared title size it reads small. This
+     multiplier buys back the presence; it is a token because
+     it changes with the face, not with the page.            */
+  --display-scale: 1.5;
+
   --upright-inset: 1.25in;  /* width the upright photo gives up, per side */
   --strip-h:     24rem;   /* filmstrip cards: one shared height */
   --measure: 68ch;      /* line length, held to 45-75 chars */
@@ -108,6 +130,23 @@
     /* the engraving needs more presence on a dark ground */
     --draw-opacity: 0.20;
   }
+}
+
+/* ============================================================
+   THE DISPLAY FACE
+   One file, one weight, hosted here rather than fetched. woff2
+   only: every browser that can run this site supports it, so a
+   second format would be dead weight. swap = the title shows in
+   Futura while the file loads instead of flashing invisible.
+   Amatic SC, SIL Open Font License 1.1.
+   ============================================================ */
+
+@font-face {
+  font-family: "Amatic SC";
+  src: url("media/amatic-sc-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* ============================================================
@@ -206,10 +245,14 @@ body::before {
 
 .project h1 {
   margin: 0;
-  font-size: var(--t-title);
+  font-family: var(--font-display);
+  /* the hand face needs the size back that its narrow figures lose */
+  font-size: calc(var(--t-title) * var(--display-scale));
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  /* Futura's tight fit wanted negative tracking; Amatic SC is
+     already condensed and closes up under it, so this opens. */
+  letter-spacing: 0.01em;
 }
 
 .project .abstract {
@@ -269,10 +312,11 @@ body::before {
 a.index__row:hover { color: var(--accent); }
 
 .index__title {
-  font-size: var(--t-title);
+  font-family: var(--font-display);
+  font-size: calc(var(--t-title) * var(--display-scale));
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
 }
 
 /* the about line is not a link yet */
