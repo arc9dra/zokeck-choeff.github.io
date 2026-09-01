@@ -232,8 +232,14 @@ body::before {
 
 .home { padding-block: var(--s-5) var(--s-6); }
 
+/* The home page drawing carries no frame - it is finished work,
+   not a held-open slot, and it opens the page so it takes no top
+   margin. */
+.home__art { margin: 0 0 var(--s-6); }
+
 /* the placeholder frame: dashed, so an unfinished slot reads as
-   deliberately unfinished rather than as a broken image */
+   deliberately unfinished rather than as a broken image. Still
+   used by grasslands.html, which IS still a placeholder. */
 .placeholder {
   margin: 0 0 var(--s-6);
   border: 1px dashed var(--rule);
