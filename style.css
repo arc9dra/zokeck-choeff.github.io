@@ -111,6 +111,10 @@
 html { scroll-behavior: smooth; }
 
 body {
+  /* the containing block for the backdrop below: without it the
+     absolutely-positioned pseudo-element sizes to the viewport at the
+     top of the document instead of to the full page height */
+  position: relative;
   margin: 0;
   padding: var(--s-4) var(--s-3) var(--s-7);   /* the tail clears the pinned credit */
   background: var(--paper);
@@ -147,26 +151,27 @@ a:focus-visible {
 }
 
 /* ============================================================
-   THE BACKDROP - a photographed engraving, hazed back
-   A drawing of ships under sail, blurred hard and dropped to a
-   low opacity so it reads as paper texture rather than as a
-   picture. It is behind everything and it is the only decorative
-   element on the site. --draw-opacity is the one dial: if you can
-   read it as an image instead of a ground, it is too strong.
-   No element in the markup - it is a pseudo-element, so the four
+   THE BACKDROP - a photographed engraving, full page height
+   A drawing of ships under sail, sharp, desaturated and dropped to
+   a low opacity so it sits behind the work without competing.
+   It is NOT fixed: it spans the whole document, so scrolling the
+   page travels down through the engraving - top of the page is the
+   top of the drawing, bottom is the bottom. A vertical page and a
+   vertical picture, moving together.
+   --draw-opacity is the one dial: if you catch yourself reading it
+   as a picture instead of a ground, it is too strong.
+   No element in the markup - it is a pseudo-element, so all four
    pages get it from this one rule instead of each carrying a copy.
    ============================================================ */
 
 body::before {
   content: "";
-  position: fixed;
-  /* oversized: the blur softens the edges, and this pushes those
-     soft edges off-screen instead of showing them as a vignette */
-  inset: -5vmax;
+  position: absolute;
+  inset: 0;                 /* the body box - the full document height */
   z-index: -1;
   pointer-events: none;
-  background: url("media/ships_01.jpg") center / cover no-repeat;
-  filter: blur(10px) grayscale(1) brightness(0.62);
+  background: url("media/ships_01.jpg") center top / cover no-repeat;
+  filter: grayscale(1) brightness(0.72);
   opacity: var(--draw-opacity);
 }
 
