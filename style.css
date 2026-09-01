@@ -209,9 +209,16 @@ body::before {
   margin: 0;
   font-family: var(--font-display);
   font-size: var(--t-title);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  /* REGULAR, not bold. Hoefler Text's bold widens the letters
+     and drops their contrast, which reads squat and blocky at
+     display size - the face is drawn to be set light. Weight
+     is not what makes a title read as a title here; size and
+     the switch to a serif already do that. */
+  font-weight: 400;
+  line-height: 1.15;
+  /* negative tracking suited the old grotesque; a serif set
+     regular wants a touch of air instead */
+  letter-spacing: 0.01em;
 }
 
 .project .abstract {
@@ -270,9 +277,9 @@ body::before {
 .index__title {
   font-family: var(--font-display);
   font-size: var(--t-title);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: 400;       /* see .project h1 - regular by design */
+  line-height: 1.25;
+  letter-spacing: 0.01em;
 }
 
 /* --- the hover: a hairline fracture in the letterforms ------
