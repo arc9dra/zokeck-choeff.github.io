@@ -271,16 +271,14 @@ a:focus-visible {
   letter-spacing: 0.12em;
 }
 
-/* the four lines. One hairline between each, so they read as one
-   list rather than four separate things. */
-.index { border-top: 1px solid var(--rule); }
+/* The four lines. Centred and stacked, the titles carrying
+   themselves with no label and no rule between them - the spacing
+   does the separating. */
+.index { text-align: center; }
 
 .index__row {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-3);
-  padding-block: var(--s-3);
-  border-bottom: 1px solid var(--rule);
+  display: block;
+  padding-block: var(--s-2);
   text-decoration: none;
   color: var(--ink);
   transition: color 200ms ease-out;
@@ -288,26 +286,15 @@ a:focus-visible {
 
 a.index__row:hover { color: var(--accent); }
 
-.index__label {
-  flex: 0 0 9rem;
-  color: var(--muted);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-a.index__row:hover .index__label { color: var(--accent); }
-
 .index__title {
-  margin: 0;
   font-size: var(--t-title);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-/* the about line is not a link yet - it just carries the name */
-.index__row--about { color: var(--ink); }
+/* the about line is not a link yet */
+.index__row--about { color: var(--muted); }
 
 /* ============================================================
    PAGE HEAD - the way back, on every project page
@@ -452,24 +439,21 @@ figure img {
 .viewer__close:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ============================================================
-   FOOTER
+   FOOTER - a credit, nothing more
    ============================================================ */
 
 .site-foot {
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--ink);
+  padding-top: var(--s-6);
+  text-align: right;
+}
+
+.credit {
+  margin: 0;
   color: var(--muted);
   font-size: var(--t-micro);
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
-
-.site-foot p { margin: 0; }
-
-.site-foot a {
-  color: var(--muted);
-  text-underline-offset: 3px;
-}
-
-.site-foot a:hover { color: var(--accent); }
 
 /* ============================================================
    BREAKPOINT - below 768px the meta band moves above the
@@ -482,15 +466,12 @@ figure img {
 
   .index__row { display: block; }
 
-  .index__label { display: block; margin-bottom: var(--s-1); }
-
   /* on a phone the cards shrink so one drawing at a time fills the
      screen and the next still peeks in at the edge */
   .strip { --strip-h: 15rem; }
 
   /* no room for a 1.25in margin either side at this width */
   .upright { --upright-inset: 0px; }
-
 
   /* the drawing gets busy on a small viewport - pull it back */
   :root { --draw-opacity: 0.04; }
