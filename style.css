@@ -261,7 +261,7 @@ body::before {
 }
 
 /* ============================================================
-   HOME - the horse, then four lines
+   HOME - the molecule, then four lines
    ============================================================ */
 
 .home { padding-block: var(--s-5) var(--s-6); }
@@ -275,7 +275,7 @@ body::before {
   color: var(--ink);
 }
 
-.horse { display: block; width: 100%; height: auto; }
+.molecule { display: block; width: 100%; height: auto; }
 
 /* An empty slot has no content to give it height, so it needs a
    shape of its own. 3:2 is the proportion of the photographs the
