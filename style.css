@@ -3,7 +3,7 @@
    MAT 189, Summer 2026 - Assignment 2, Part 2
 
    DESIGN DIRECTION: Swiss / International Style.
-   Strict grid, one grotesque typeface, generous whitespace,
+   Strict grid, one geometric sans, generous whitespace,
    asymmetric layout, hairline rules, near-zero decoration.
    The work is the content; the page is a frame that gets out
    of its way (Tufte: show the data).
@@ -24,8 +24,8 @@
        rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
               never text - it is not required to pass)
      The accent is lavender. It carries every piece of colour
-     on the page - the medium label, link hovers, the focus
-     ring - so it has to pass AA as text, which is why the
+     on the page - link hovers and the focus ring - so it has
+     to pass AA as text, which is why the
      LIGHT mode value is a deep lavender rather than a pale
      one: a genuinely light lavender lands near 1.7:1 on this
      paper and is unreadable. Dark mode gets the pale version,
@@ -57,14 +57,22 @@
   --s-7: 6rem;
 
   /* --- type ------------------------------------------------
-     A grotesque stack, NOT a web font. This site has to open
-     offline by double-clicking index.html; a Google Fonts
-     link would fail with the wifi down and fall back to
-     something unchosen. Helvetica is also the correct
-     typeface for this tradition, so the constraint and the
-     design decision agree.                                   */
-  --font: "Helvetica Neue", Helvetica, Arial, "Inter",
-          system-ui, -apple-system, sans-serif;
+     Futura leads the stack: the geometric sans architects
+     actually built the late 1900s on. Bauhaus-descended, it
+     ran from 1930s firm identities through the drawing sets
+     of the CAD era, and Univers (Frutiger, 1957) and
+     Helvetica stand beside it in that canon - so they fall in
+     behind it here rather than being dropped.
+     Still NOT a web font. This site has to open offline by
+     double-clicking index.html; a Google Fonts link would
+     fail with the wifi down and land on something unchosen.
+     So every name below is one an OS already ships: Futura on
+     macOS, Century Gothic (same geometric lineage) on
+     Windows, then the Swiss pair, then the generic. The
+     constraint and the design decision still agree.          */
+  --font: Futura, "Futura PT", "Century Gothic", Univers,
+          "Avenir Next", Avenir, "Helvetica Neue", Helvetica,
+          Arial, sans-serif;
 
   --upright-inset: 1.25in;  /* width the upright photo gives up, per side */
   --strip-h:     24rem;   /* filmstrip cards: one shared height */
@@ -196,14 +204,12 @@ body::before {
   letter-spacing: 0.1em;
 }
 
-.project__meta .medium { color: var(--accent); font-weight: 700; }
-
 .project h1 {
   margin: 0;
   font-size: var(--t-title);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .project .abstract {
@@ -227,6 +233,17 @@ body::before {
 }
 
 .horse { display: block; width: 100%; height: auto; }
+
+/* An empty slot has no content to give it height, so it needs a
+   shape of its own. 3:2 is the proportion of the photographs the
+   finished pages carry, so the placeholder reserves the space the
+   real image will take rather than an arbitrary box. */
+.placeholder__slot { aspect-ratio: 3 / 2; }
+
+/* On the home page the placeholder opens the page, so it has no top
+   margin. Inside a project it follows the title and needs the same
+   gap every other figure gets. */
+.project .placeholder { margin-top: var(--s-3); }
 
 .placeholder__note {
   margin-top: var(--s-2);
@@ -255,7 +272,7 @@ a.index__row:hover { color: var(--accent); }
   font-size: var(--t-title);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 /* the about line is not a link yet */
