@@ -76,12 +76,7 @@
      from one line. It has to stay low enough that it never
      competes with the work - if you can read it as a picture
      instead of a texture, it is too strong.                  */
-  /* the backdrop tint, walked through by scroll position */
-  --glow-1: #7c4dff;   /* purple, at the top    */
-  --glow-2: #ff4d9d;   /* pink,   through the middle */
-  --glow-3: #ffc23d;   /* yellow, at the bottom */
-
-  --draw-opacity: 0.055;
+  --draw-opacity: 0.13;
 
   /* lets the browser render native controls and scrollbars in
      the matching scheme instead of a white box on a dark page */
@@ -102,8 +97,8 @@
     --muted:  #a09d97;
     --rule:   #34332f;
     --accent: #c6adff;
-    /* line art needs slightly more presence on a dark ground */
-    --draw-opacity: 0.075;
+    /* the engraving needs more presence on a dark ground */
+    --draw-opacity: 0.20;
   }
 }
 
@@ -117,7 +112,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  padding: var(--s-4) var(--s-3) var(--s-7);
+  padding: var(--s-4) var(--s-3) var(--s-7);   /* the tail clears the pinned credit */
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
@@ -152,62 +147,27 @@ a:focus-visible {
 }
 
 /* ============================================================
-   THE BACKDROP - a field of long sweeping lines
-   Fixed behind everything and held at low opacity so it reads as
-   paper texture, not as an image. Its colour is walked from purple
-   through pink to yellow by scroll position (see below). It is the
-   only decorative element on the site; if it ever reads as a
-   picture competing with the work, turn --draw-opacity down.
+   THE BACKDROP - a photographed engraving, hazed back
+   A drawing of ships under sail, blurred hard and dropped to a
+   low opacity so it reads as paper texture rather than as a
+   picture. It is behind everything and it is the only decorative
+   element on the site. --draw-opacity is the one dial: if you can
+   read it as an image instead of a ground, it is too strong.
+   No element in the markup - it is a pseudo-element, so the four
+   pages get it from this one rule instead of each carrying a copy.
    ============================================================ */
 
-.backdrop {
+body::before {
+  content: "";
   position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  /* oversized: the blur softens the edges, and this pushes those
+     soft edges off-screen instead of showing them as a vignette */
+  inset: -5vmax;
   z-index: -1;
   pointer-events: none;
-  color: var(--ink);
+  background: url("media/ships_01.jpg") center / cover no-repeat;
+  filter: blur(10px) grayscale(1) brightness(0.62);
   opacity: var(--draw-opacity);
-}
-
-/* the sweeping field - hairline, no fill */
-.backdrop .flow polyline,
-.backdrop .sweep polyline {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-}
-
-.backdrop .flow polyline { stroke-width: 0.9; }
-
-/* the bolder arcs that cut across, for depth */
-.backdrop .sweep polyline { stroke-width: 2.2; opacity: 0.75; }
-
-/* --- the colour shift ---------------------------------------------
-   The backdrop is tinted by SCROLL POSITION, not by a timer: purple at
-   the top of the page, through pink, to yellow at the bottom. Done with
-   a scroll-driven animation, so it is still zero JavaScript - the
-   timeline is the document's own scroll. Browsers without support
-   simply keep the ink colour, which is the old behaviour.            */
-@supports (animation-timeline: scroll()) {
-  @keyframes backdrop-tint {
-    0%   { color: var(--glow-1); opacity: var(--draw-opacity); }
-    50%  { color: var(--glow-2); opacity: calc(var(--draw-opacity) * 1.5); }
-    100% { color: var(--glow-3); opacity: calc(var(--draw-opacity) * 1.7); }
-  }
-
-  .backdrop {
-    /* longhands, not the shorthand: `animation:` would force
-       animation-duration to 0s, which collapses a scroll timeline to
-       nothing. A scroll-driven animation wants duration auto, so that
-       its length IS the scrollable distance. */
-    animation-name: backdrop-tint;
-    animation-duration: auto;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: scroll(root block);
-  }
 }
 
 /* ============================================================
@@ -443,7 +403,15 @@ figure img {
    ============================================================ */
 
 .site-foot {
-  padding-top: var(--s-6);
+  /* pinned to the true bottom of the viewport, not to the end of the
+     document - it is a standing credit, not the end of the reading */
+  position: fixed;
+  right: var(--s-3);
+  bottom: var(--s-2);
+  z-index: 5;
+  max-width: none;
+  margin-inline: 0;
+  padding-top: 0;
   text-align: right;
 }
 
@@ -473,13 +441,12 @@ figure img {
   /* no room for a 1.25in margin either side at this width */
   .upright { --upright-inset: 0px; }
 
-  /* the drawing gets busy on a small viewport - pull it back */
-  :root { --draw-opacity: 0.04; }
+  /* busier on a small viewport - pull it back */
+  :root { --draw-opacity: 0.10; }
 }
 
 /* respect the visitor's motion setting */
 @media (prefers-reduced-motion: reduce) {
-  .backdrop { animation: none; }
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; }
 }
