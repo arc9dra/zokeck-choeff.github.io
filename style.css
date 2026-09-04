@@ -237,36 +237,7 @@ body::before {
    margin. */
 .home__art { margin: 0 0 var(--s-6); }
 
-/* the placeholder frame: dashed, so an unfinished slot reads as
-   deliberately unfinished rather than as a broken image. Still
-   used by grasslands.html, which IS still a placeholder. */
-.placeholder {
-  margin: 0 0 var(--s-6);
-  border: 1px dashed var(--rule);
-  padding: var(--s-4) var(--s-3) var(--s-2);
-  color: var(--ink);
-}
-
 .molecule { display: block; width: 100%; height: auto; }
-
-/* An empty slot has no content to give it height, so it needs a
-   shape of its own. 3:2 is the proportion of the photographs the
-   finished pages carry, so the placeholder reserves the space the
-   real image will take rather than an arbitrary box. */
-.placeholder__slot { aspect-ratio: 3 / 2; }
-
-/* On the home page the placeholder opens the page, so it has no top
-   margin. Inside a project it follows the title and needs the same
-   gap every other figure gets. */
-.project .placeholder { margin-top: var(--s-3); }
-
-.placeholder__note {
-  margin-top: var(--s-2);
-  color: var(--muted);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
 
 /* The four lines. Centred and stacked, the titles carrying
    themselves with no label and no rule between them - the spacing
@@ -368,18 +339,6 @@ figure img {
    would leave almost nothing for the picture. */
 .upright {
   width: calc(100% - var(--upright-inset) * 2);
-}
-
-/* --- the presentation ------------------------------------
-   Its slides are laid out at a fixed 1056px wide and do not
-   reflow, so embedding it in this column clipped its edges at
-   every width. The title slide stands in and links to the
-   file, which opens at the size it was built for. The whole
-   image is the link, so the cursor carries the affordance and
-   the alt text carries the destination - no label needed. */
-.presentation {
-  display: block;
-  cursor: pointer;
 }
 
 /* --- the filmstrip -------------------------------------------------
