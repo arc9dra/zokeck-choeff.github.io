@@ -323,6 +323,12 @@ a.index__row:focus-visible .index__title {
    FIGURES
    ============================================================ */
 
+/* The portrait on the About page. A face does not need the full
+   column - held to the narrow end so it sits WITH the paragraph
+   rather than towering over a page that is one paragraph long.
+   Everything else (border, width:100%) comes from `figure img`. */
+.portrait { max-width: 22rem; }
+
 figure {
   margin: var(--s-3) 0 0;
 }
