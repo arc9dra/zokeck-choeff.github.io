@@ -124,6 +124,15 @@ body {
      absolutely-positioned pseudo-element sizes to the viewport at the
      top of the document instead of to the full page height */
   position: relative;
+  /* ...and because the backdrop is inset:0 on THIS box, a page with
+     little content (About) left the drawing stopping mid-screen with
+     bare paper under it. Holding the body to at least a screen tall
+     makes the ground reach the bottom on short pages without changing
+     long ones. dvh second so mobile measures the visible viewport,
+     not the one hidden behind browser chrome; older engines ignore it
+     and keep the vh line. */
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: var(--s-4) var(--s-3) var(--s-7);   /* the tail clears the pinned credit */
   background: var(--paper);
