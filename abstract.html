@@ -25,41 +25,34 @@
     <h1>Abstract Collection</h1>
 
       <!-- Every drawing opens at full resolution: the page shows them
-           small enough to sit in the layout, so a way back to the real
-           file has to exist. See .viewer - CSS only, no script. -->
+           at column width, so a way back to the real file has to exist.
+           See .viewer - CSS only, no script. -->
 
-      <!-- The four sheets on a carousel you spin by dragging. There is
-           still NO JavaScript here. The ring is a 3D transform whose
-           rotation is driven by a scroll-driven animation, so the drag
-           IS the scroll: the browser's own inertia carries the spin on
-           and slows it down, and a harder fling spins it further.
-           .carousel__rail has no content - it exists only to give the
-           scroller something long enough to travel through, and five
-           screens of travel drive exactly one full turn.
-           Browsers without scroll-driven animations, and anyone who has
-           asked for reduced motion, get a flat snap strip from the same
-           markup - see the @supports block in style.css.
-           Sized by HEIGHT, not width: the sheets were photographed at
-           different distances, so a shared width read as ragged. -->
+      <!-- All four sheets stacked down the column, each at the full
+           measure. The files are 4000px+ wide against a 1088px column,
+           so every one is displayed well under its native resolution
+           and stays sharp. No carousel: a stack shows all four at once
+           and needs no gesture to work. -->
 
-      <figure class="carousel">
-        <div class="carousel__scroll">
-          <div class="carousel__rail">
-            <div class="carousel__ring">
-              <ul class="carousel__spin">
-                <li class="carousel__cell"><a class="zoom" href="#view-01">
-                  <img src="media/abstract_01.jpg" alt="A spiral-bound sketchpad page covered edge to edge in dense black pen marks, with a darker knot of overdrawn line gathering near the centre and thinning out toward the margins."></a></li>
-                <li class="carousel__cell"><a class="zoom" href="#view-02">
-                  <img src="media/abstract_02.jpg" alt="Pen drawing on a sketchpad page: an all-over field of small linked forms radiating outward, with a heavy black mass worked into the lower left corner."></a></li>
-                <li class="carousel__cell"><a class="zoom" href="#view-03">
-                  <img src="media/abstract_03.jpg" alt="Pen drawing on a sketchpad page: an even all-over field of small creature-like figures and loops, densest through the middle band."></a></li>
-                <li class="carousel__cell"><a class="zoom" href="#view-04">
-                  <img src="media/abstract_04.jpg" alt="Pen drawing on a sketchpad page: spiky angular forms scattered across the sheet, opening into a lighter clearing left of centre."></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <figcaption class="carousel__note">Scroll, swipe or drag the bar to spin</figcaption>
+      <figure>
+        <a class="zoom" href="#view-01">
+          <img src="media/abstract_01.jpg" alt="A spiral-bound sketchpad page covered edge to edge in dense black pen marks, with a darker knot of overdrawn line gathering near the centre and thinning out toward the margins.">
+        </a>
+      </figure>
+      <figure>
+        <a class="zoom" href="#view-02">
+          <img src="media/abstract_02.jpg" alt="Pen drawing on a sketchpad page: an all-over field of small linked forms radiating outward, with a heavy black mass worked into the lower left corner.">
+        </a>
+      </figure>
+      <figure>
+        <a class="zoom" href="#view-03">
+          <img src="media/abstract_03.jpg" alt="Pen drawing on a sketchpad page: an even all-over field of small creature-like figures and loops, densest through the middle band.">
+        </a>
+      </figure>
+      <figure>
+        <a class="zoom" href="#view-04">
+          <img src="media/abstract_04.jpg" alt="Pen drawing on a sketchpad page: spiky angular forms scattered across the sheet, opening into a lighter clearing left of centre.">
+        </a>
       </figure>
 
     <p class="abstract">
