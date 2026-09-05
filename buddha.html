@@ -24,10 +24,25 @@
 
     <h1>Buddha Clock Concept</h1>
 
-      <figure>
-        <img class="upright" src="media/buddha_01.jpeg"
+      <!-- Two views of the same object, one slot. The checkbox below is
+           the whole mechanism: it is visually hidden but still focusable,
+           the <label> is the button, and :checked swaps which image and
+           which word are shown. No script - see .swap in style.css.
+           Both photographs are within a thousandth of the same aspect
+           ratio, so nothing on the page moves when they trade places. -->
+      <input class="swap__switch" type="checkbox" id="buddha-blueprint">
+
+      <figure class="swap">
+        <img class="swap__a upright" src="media/buddha_01.jpeg"
              alt="A 3D-printed sunburst clock with white tapered rays and black hands, mounted on a white printed housing, with a dark green Buddha figure anchoring it from behind.">
+        <img class="swap__b upright" src="media/buddha_05.png"
+             alt="The same clock as an untextured 3D model: the twelve tapered arms fanned out around the drilled hub, with the seated Buddha figure and its block housing modelled beside them.">
       </figure>
+
+      <label class="swap__button" for="buddha-blueprint">
+        <span class="swap__word swap__word--a">Blueprint</span>
+        <span class="swap__word swap__word--b">Main</span>
+      </label>
 
     <p class="abstract">
       This concept features a fully working clock with hour and minute hands. The green buddha acts as an anchor to hold the clock which doesn't need to be mounted on a wall. There are 12 arms to signal the time.

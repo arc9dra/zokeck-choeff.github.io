@@ -78,6 +78,15 @@
   --font-display: "Hoefler Text", Baskerville,
                   "Times New Roman", Times, serif;
 
+  /* --- the drafting face -----------------------------------
+     One button uses it: the Blueprint / Main toggle. A mono
+     set in caps and widely tracked is what annotation on a
+     drawing sheet looks like, and unlike a real drafting face
+     (ISOCPEUR, Simplex) every name here already ships with
+     the OS, so it still costs no download.                  */
+  --font-draft: ui-monospace, "SF Mono", Menlo, "Andale Mono",
+                "Courier New", monospace;
+
   --upright-inset: 1.75in;  /* width the upright photo gives up, per side */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
@@ -353,6 +362,55 @@ figure img {
    would leave almost nothing for the picture. */
 .upright {
   width: calc(100% - var(--upright-inset) * 2);
+}
+
+/* --- two views, one slot -------------------------------------------
+   The Buddha clock as built and as modelled. The <input> is the entire
+   mechanism: visually hidden but still reachable by keyboard, with the
+   <label> as its button. :checked decides which image and which word
+   are shown, so the toggle needs no script.
+   Both files sit within a thousandth of the same aspect ratio and both
+   take .upright, so they occupy an identical box - the page does not
+   shift when they trade. */
+.swap__switch {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.swap__b { display: none; }
+.swap__switch:checked ~ .swap .swap__a { display: none; }
+.swap__switch:checked ~ .swap .swap__b { display: block; }
+
+/* the button says what you will GET, not what you are looking at */
+.swap__word--b { display: none; }
+.swap__switch:checked ~ .swap__button .swap__word--a { display: none; }
+.swap__switch:checked ~ .swap__button .swap__word--b { display: inline; }
+
+.swap__button {
+  display: inline-block;
+  margin-top: var(--s-2);
+  padding: var(--s-1) var(--s-2);
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--font-draft);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  user-select: none;             /* a double-click should not select the word */
+  transition: color 200ms ease-out, border-color 200ms ease-out;
+}
+
+.swap__button:hover { color: var(--ink); border-color: var(--ink); }
+
+/* the checkbox is invisible, so its focus ring has to land on the
+   label instead - a keyboard user must still see where they are */
+.swap__switch:focus-visible ~ .swap__button {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
 }
 
 /* --- opening a drawing at full resolution --------------------------
