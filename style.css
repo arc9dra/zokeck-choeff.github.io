@@ -78,7 +78,7 @@
   --font-display: "Hoefler Text", Baskerville,
                   "Times New Roman", Times, serif;
 
-  --upright-inset: 1.25in;  /* width the upright photo gives up, per side */
+  --upright-inset: 1.75in;  /* width the upright photo gives up, per side */
   --strip-h:     24rem;   /* filmstrip cards: one shared height */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
@@ -343,14 +343,14 @@ figure img {
 }
 
 /* The one upright photograph. At full column width it stands about
-   twice as tall as anything else, so it is inset: it gives up 2.5in
+   twice as tall as anything else, so it is inset: it gives up 3.5in
    of width and keeps its left edge on the column, so the empty page
    falls entirely on the right. Left-aligned rather than centred,
    because every other image on the page starts at that same left
    edge - centring this one broke the line the eye follows down the
    column. The inset is in inches, not a percentage, so the image
    gives up width as the column narrows and the margin holds.
-   Below the breakpoint it drops to zero: 2.5in of margin on a phone
+   Below the breakpoint it drops to zero: 3.5in of margin on a phone
    would leave almost nothing for the picture. */
 .upright {
   width: calc(100% - var(--upright-inset) * 2);
