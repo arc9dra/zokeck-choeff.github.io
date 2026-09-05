@@ -13,32 +13,46 @@
 
 <main id="main" class="home">
 
-  <!-- A water molecule: one oxygen, two hydrogens, set at the real
-       bond angle (about 104.5 degrees) rather than a flat right angle.
-       Stroke weight and round caps match the line work elsewhere on the
-       site. Inline SVG rather than a file so it takes currentColor and
-       reads correctly in both light and dark mode with no second asset. -->
+  <!-- A water molecule as a Bohr diagram: three nuclei, each inside its
+       own electron shell, with the electrons marked as dots sitting on
+       the shells. The shells overlap, which is the whole point of the
+       picture - that is the bond.
+       No element letters: the shapes carry it. Geometry is real, the
+       two hydrogens sit at 104.5 degrees about the oxygen, and the
+       radii are chosen so the shells actually intersect rather than
+       just touching.
+       Inline SVG rather than a file so it takes currentColor and reads
+       in both light and dark mode with no second asset. -->
   <figure class="home__art">
     <svg class="molecule" role="img" focusable="false" viewBox="0 0 460 250"
-         aria-label="A water molecule: one oxygen atom bonded to two hydrogen atoms.">
+         aria-label="A water molecule drawn as a Bohr diagram: a large central nucleus and two smaller ones, each ringed by its own overlapping electron shell, with electrons marked as dots around the rings.">
 
-      <g fill="none" stroke="currentColor" stroke-width="6"
-         stroke-linecap="round" stroke-linejoin="round">
-        <!-- bonds first, drawn circle-edge to circle-edge so the strokes
-             meet the atoms cleanly instead of running under them -->
-        <path d="M190.5 122.6 L143 159.3"/>
-        <path d="M269.5 122.6 L317 159.3"/>
-        <!-- oxygen -->
-        <circle cx="230" cy="92" r="50"/>
-        <!-- the two hydrogens -->
-        <circle cx="119.3" cy="177.7" r="30"/>
-        <circle cx="340.7" cy="177.7" r="30"/>
+      <!-- the shells -->
+      <g fill="none" stroke="currentColor" stroke-width="4">
+        <circle cx="230"   cy="150"  r="90"/>
+        <circle cx="126.4" cy="69.8" r="57.5"/>
+        <circle cx="333.6" cy="69.8" r="57.5"/>
       </g>
 
-      <g fill="currentColor" stroke="none" font-weight="700" text-anchor="middle">
-        <text x="230"   y="92"    font-size="46" dy="0.35em">O</text>
-        <text x="119.3" y="177.7" font-size="28" dy="0.35em">H</text>
-        <text x="340.7" y="177.7" font-size="28" dy="0.35em">H</text>
+      <g fill="currentColor" stroke="none">
+        <!-- nuclei: the oxygen larger than the two hydrogens -->
+        <circle cx="230"   cy="150"  r="30"/>
+        <circle cx="126.4" cy="69.8" r="17.5"/>
+        <circle cx="333.6" cy="69.8" r="17.5"/>
+
+        <!-- electrons, spaced around the oxygen shell -->
+        <circle cx="320"   cy="150"   r="10"/>
+        <circle cx="281.6" cy="223.7" r="10"/>
+        <circle cx="178.4" cy="223.7" r="10"/>
+        <circle cx="140"   cy="150"   r="10"/>
+        <circle cx="178.4" cy="76.3"  r="10"/>
+        <circle cx="281.6" cy="76.3"  r="10"/>
+
+        <!-- one pair on each hydrogen shell -->
+        <circle cx="72.4"  cy="50.1"  r="10"/>
+        <circle cx="180.4" cy="89.5"  r="10"/>
+        <circle cx="387.6" cy="50.1"  r="10"/>
+        <circle cx="279.6" cy="89.5"  r="10"/>
       </g>
     </svg>
   </figure>
