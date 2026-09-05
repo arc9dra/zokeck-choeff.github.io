@@ -24,10 +24,24 @@
 
     <h1>Grasslands: New World</h1>
 
-      <figure>
-        <img src="media/grasslands_01.jpg"
+      <!-- Two views of the same garden, one slot - the same checkbox
+           mechanism as the Buddha page. Visually hidden but focusable,
+           the <label> is the button, :checked swaps image and word. No
+           script. Unlike the Buddha pair these two are different shapes,
+           so the slot is pinned to a ratio - see .swap--grasslands. -->
+      <input class="swap__switch" type="checkbox" id="grasslands-experiment">
+
+      <figure class="swap swap--grasslands">
+        <img class="swap__a" src="media/grasslands_01.jpg"
              alt="A screenshot from the game, taken at insect height: blades of grass tower over the camera, a fence and a pale-leaved tree stand against a bright blue sky with heavy cumulus cloud, and a mound of bare earth rises behind the grass to the right.">
+        <img class="swap__b" src="media/grasslands_02.jpg"
+             alt="The same garden open in the editor mid-experiment: the grass rendered as tall translucent bands of rainbow colour, with the move gizmo and a selection outline drawn over the ground.">
       </figure>
+
+      <label class="swap__button" for="grasslands-experiment">
+        <span class="swap__word swap__word--a">Experiment</span>
+        <span class="swap__word swap__word--b">Main</span>
+      </label>
 
     <p class="abstract">
       A playable VR game developed with Unity where you explore a house

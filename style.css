@@ -380,6 +380,14 @@ figure img {
   pointer-events: none;
 }
 
+/* The Grasslands pair are different shapes - 1.71 wide against 1.27 -
+   so the slot is pinned to the main image's proportion and the
+   experiment letterboxes inside it. Without this the page jumped about
+   340px every time the button was pressed. The Buddha pair need none of
+   this: those two are within a thousandth of each other. */
+.swap--grasslands { aspect-ratio: 1800 / 1055; }
+.swap--grasslands img { width: 100%; height: 100%; object-fit: contain; }
+
 .swap__b { display: none; }
 .swap__switch:checked ~ .swap .swap__a { display: none; }
 .swap__switch:checked ~ .swap .swap__b { display: block; }
