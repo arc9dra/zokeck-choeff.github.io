@@ -79,7 +79,8 @@
                   "Times New Roman", Times, serif;
 
   --upright-inset: 1.75in;  /* width the upright photo gives up, per side */
-  --strip-h:     24rem;   /* filmstrip cards: one shared height */
+  --ring-h:      24rem;   /* carousel: one shared sheet height */
+  --ring-r:      22rem;   /* carousel: how far each sheet sits from the axis */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
@@ -356,24 +357,25 @@ figure img {
   width: calc(100% - var(--upright-inset) * 2);
 }
 
-/* --- the filmstrip -------------------------------------------------
-   The three companion drawings scroll horizontally and snap, one sheet
-   at a time. The three sheets were photographed at slightly different
-   distances, so at a shared WIDTH they came out three different heights
-   and the strip read as ragged. Sizing by HEIGHT instead levels them:
-   each card is --strip-h tall and takes whatever width its own
-   proportion needs. Nothing is cropped to achieve it - the widths vary
-   by about 20px, which reads as even, while unequal heights did not.  */
-.strip {
-  display: flex;
-  gap: var(--s-2);
-  margin: 0;
-  /* No bottom padding: it would push the description 16px further
-     from the drawings than the other two projects have it, and the
-     gap under an image should read the same in every section. On
-     macOS the scrollbar overlays and costs no space anyway. */
-  padding: 0;
-  list-style: none;
+/* --- the carousel ---------------------------------------------------
+   The four sheets on a ring you spin by dragging, with NO script.
+   The trick: a scroll-driven animation. .carousel__rail is empty and
+   five screens wide purely to give the scroller something to travel
+   through; .carousel__ring sticks in place while that travel happens,
+   and the travel drives one full rotateY turn on .carousel__spin. So
+   the drag IS the scroll - which means the browser's own fling inertia
+   carries the spin on and eases it down for free, and a harder throw
+   carries it further. No physics of ours to write or tune.
+   Sized by HEIGHT, not width: the sheets were photographed at slightly
+   different distances, so a shared width came out ragged. Nothing is
+   cropped to level them.
+   The base rules below are the FALLBACK - a flat horizontal snap strip
+   that works everywhere. The ring is layered on in the @supports block
+   after it, so a browser without scroll-driven animations still gets
+   four full-size sheets it can scroll through.                       */
+.carousel { margin: var(--s-3) 0 0; }
+
+.carousel__scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -381,15 +383,110 @@ figure img {
   scrollbar-color: var(--rule) transparent;
 }
 
-.strip__item {
-  flex: 0 0 auto;              /* width follows the image, not the box */
-  scroll-snap-align: start;
+.carousel__rail { width: 100%; }
+
+.carousel__spin {
+  display: flex;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* the shared height that levels the strip */
-.strip__item img {
-  height: var(--strip-h);
+.carousel__cell {
+  flex: 0 0 auto;              /* width follows the image, not the box */
+  scroll-snap-align: center;
+}
+
+/* the <a> is the image's real parent, so it has to carry the height -
+   a percentage height on the img alone has nothing to resolve against
+   and silently falls back to the file's natural size (4000px wide). */
+.carousel__cell > .zoom { display: block; height: var(--ring-h); }
+
+.carousel__cell img {
+  height: 100%;
   width: auto;
+  max-width: none;
+}
+
+.carousel__note {
+  margin-top: var(--s-2);
+  color: var(--muted);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* --- the ring itself, where the browser can drive it ----------------
+   Gated twice over: on support for scroll-driven animations, and on
+   the reader not having asked for reduced motion. Either miss and the
+   flat strip above is what stands.                                   */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    .carousel { overflow: hidden; }   /* the ring's edges are meant to be cut */
+
+    .carousel__scroll {
+      scroll-snap-type: none;
+      cursor: grab;
+      scrollbar-width: none;          /* the drag is the affordance, not a bar */
+    }
+    .carousel__scroll::-webkit-scrollbar { display: none; }
+    .carousel__scroll:active { cursor: grabbing; }
+
+    /* empty, and five screens wide: this is the scroll distance */
+    .carousel__rail { width: 500%; }
+
+    /* holds still while the rail travels past. 20% of a 500% rail is
+       exactly one screen, so the stage stays the width of the column. */
+    .carousel__ring {
+      position: sticky;
+      left: 0;
+      width: 20%;
+      height: var(--ring-h);
+      perspective: 60rem;
+    }
+
+    .carousel__spin {
+      display: block;
+      position: relative;
+      height: 100%;
+      transform-style: preserve-3d;
+      /* pulled back by the radius so the FRONT sheet lands at z=0 and
+         is drawn at its true size rather than magnified by perspective */
+      /* longhands on purpose: the `animation` shorthand forces
+         animation-duration to 0s, which gives a scroll-driven
+         animation no active range at all and nothing moves. `auto` is
+         what makes the animation span the whole scroll range. */
+      animation-name: ring-spin;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(nearest inline);
+    }
+
+    .carousel__cell {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;    /* the sheet facing away stays hidden */
+    }
+
+    .carousel__cell > .zoom { height: 100%; }
+
+    /* the four stations of the ring */
+    .carousel__cell:nth-child(1) { transform: rotateY(  0deg) translateZ(var(--ring-r)); }
+    .carousel__cell:nth-child(2) { transform: rotateY( 90deg) translateZ(var(--ring-r)); }
+    .carousel__cell:nth-child(3) { transform: rotateY(180deg) translateZ(var(--ring-r)); }
+    .carousel__cell:nth-child(4) { transform: rotateY(270deg) translateZ(var(--ring-r)); }
+  }
+}
+
+@keyframes ring-spin {
+  from { transform: translateZ(calc(var(--ring-r) * -1)) rotateY(0deg); }
+  to   { transform: translateZ(calc(var(--ring-r) * -1)) rotateY(-360deg); }
 }
 
 /* --- opening a drawing at full resolution --------------------------
@@ -472,7 +569,7 @@ figure img {
 
   /* on a phone the cards shrink so one drawing at a time fills the
      screen and the next still peeks in at the edge */
-  .strip { --strip-h: 15rem; }
+  .carousel { --ring-h: 15rem; --ring-r: 13rem; }
 
   /* no room for a 1.25in margin either side at this width */
   .upright { --upright-inset: 0px; }
