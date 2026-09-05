@@ -79,8 +79,9 @@
                   "Times New Roman", Times, serif;
 
   --upright-inset: 1.75in;  /* width the upright photo gives up, per side */
-  --ring-h:      24rem;   /* carousel: one shared sheet height */
-  --ring-r:      22rem;   /* carousel: how far each sheet sits from the axis */
+  --ring-h:      40rem;   /* carousel: one shared sheet height - sized so a
+                             sheet lands near the full column width */
+  --ring-r:      30rem;   /* carousel: how far each sheet sits from the axis */
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
@@ -426,13 +427,12 @@ figure img {
 
     .carousel { overflow: hidden; }   /* the ring's edges are meant to be cut */
 
-    .carousel__scroll {
-      scroll-snap-type: none;
-      cursor: grab;
-      scrollbar-width: none;          /* the drag is the affordance, not a bar */
-    }
-    .carousel__scroll::-webkit-scrollbar { display: none; }
-    .carousel__scroll:active { cursor: grabbing; }
+    /* The scrollbar STAYS. A mouse cannot drag a scroll container -
+       that gesture does not exist without script - so the bar is the
+       only handle a mouse user has. Trackpad, touch and the wheel all
+       spin it directly. An earlier version hid the bar and set a grab
+       cursor, which promised a drag that could never work. */
+    .carousel__scroll { scroll-snap-type: none; }
 
     /* empty, and five screens wide: this is the scroll distance */
     .carousel__rail { width: 500%; }
@@ -444,7 +444,7 @@ figure img {
       left: 0;
       width: 20%;
       height: var(--ring-h);
-      perspective: 60rem;
+      perspective: 90rem;
     }
 
     .carousel__spin {
