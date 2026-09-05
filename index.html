@@ -13,58 +13,60 @@
 
 <main id="main" class="home">
 
-  <!-- A water molecule: one oxygen, two hydrogens, at the real bond
-       angle (about 104.5 degrees) rather than a flat right angle.
-       The atoms and bonds are the original drawing. Around each atom is
-       its electron shell, thinner than the atom itself so it reads as
-       the quieter layer, with electrons riding on it - six valence
-       electrons for the oxygen, one each for the hydrogens. The shells
-       overlap where the atoms bond, which is the point of showing them.
-       The electrons are filled in --paper and drawn LAST, so the shell
-       line stops at each one instead of running straight through it -
-       they sit on the ring rather than behind it.
-       The letters are deliberately small and set in --muted: they label
-       the drawing without competing with it.
-       Inline SVG rather than a file so it takes currentColor and reads
-       in both light and dark mode with no second asset. -->
+  <!-- A water molecule, drawn to be chemically correct.
+       Oxygen carries TWO shells: an inner one with 2 electrons and an
+       outer one with 6. Each hydrogen has one shell.
+       Two of those six outer electrons are placed on an actual
+       intersection of the oxygen's outer shell with a hydrogen shell,
+       so each sits on BOTH rings at once - that is the shared pair, and
+       it is why the hydrogen rings are drawn overlapping rather than
+       merely touching. The oxygen reaches its octet: 6 of its own plus
+       the 2 shared in from the hydrogens.
+       The other four outer electrons are the two lone pairs, kept on
+       the far side from the bonds, where they actually sit.
+       Bond angle is the real 104.5 degrees. Electrons are filled in
+       --paper and drawn last so no ring runs through them. Letters are
+       small and --muted: they label without competing.
+       Inline SVG so it takes currentColor and serves both modes. -->
   <figure class="home__art">
     <svg class="molecule" role="img" focusable="false" viewBox="0 0 460 250"
-         aria-label="A water molecule: one oxygen atom bonded to two hydrogen atoms, each atom ringed by its electron shell with electrons sitting on the rings.">
+         aria-label="A water molecule as a Bohr diagram: an oxygen atom with two electron shells, two electrons on the inner and six on the outer, bonded to two hydrogen atoms whose shells overlap the oxygen's outer shell at a shared electron.">
 
       <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <!-- the shells: the quieter layer -->
         <g stroke-width="3">
-          <circle cx="230.0" cy="100.0" r="76"/>
-          <circle cx="127.2" cy="179.6" r="56"/>
-          <circle cx="332.8" cy="179.6" r="56"/>
+          <circle cx="230.0" cy="110.0" r="52"/>
+          <circle cx="230.0" cy="110.0" r="84"/>
+          <circle cx="132.0" cy="185.9" r="48"/>
+          <circle cx="328.0" cy="185.9" r="48"/>
         </g>
 
         <!-- the molecule itself -->
         <g stroke-width="5">
-          <path d="M196.8 125.7 L147.8 163.7"/>
-          <path d="M263.2 125.7 L312.2 163.7"/>
-          <circle cx="230.0" cy="100.0" r="42"/>
-          <circle cx="127.2" cy="179.6" r="26"/>
-          <circle cx="332.8" cy="179.6" r="26"/>
+          <path d="M206.3 128.4 L149.3 172.4"/>
+          <path d="M253.7 128.4 L310.7 172.4"/>
+          <circle cx="230.0" cy="110.0" r="30"/>
+          <circle cx="132.0" cy="185.9" r="22"/>
+          <circle cx="328.0" cy="185.9" r="22"/>
         </g>
       </g>
 
       <!-- electrons last, opaque, so nothing shows through them -->
       <g fill="var(--paper)" stroke="currentColor" stroke-width="3">
-        <circle cx="306.0" cy="100.0" r="9"/>
-        <circle cx="256.0" cy="171.4" r="9"/>
-        <circle cx="204.0" cy="171.4" r="9"/>
-        <circle cx="154.0" cy="100.0" r="9"/>
-        <circle cx="204.0" cy="28.6" r="9"/>
-        <circle cx="256.0" cy="28.6" r="9"/>
-        <circle cx="82.9" cy="213.9" r="9"/>
-        <circle cx="377.1" cy="213.9" r="9"/>
+        <circle cx="230.0" cy="162.0" r="9"/>
+        <circle cx="230.0" cy="58.0" r="9"/>
+        <circle cx="153.9" cy="74.5" r="9"/>
+        <circle cx="201.3" cy="31.1" r="9"/>
+        <circle cx="258.7" cy="31.1" r="9"/>
+        <circle cx="306.1" cy="74.5" r="9"/>
+        <circle cx="152.6" cy="142.6" r="9"/>
+        <circle cx="307.4" cy="142.6" r="9"/>
       </g>
 
       <g fill="var(--muted)" stroke="none" text-anchor="middle" font-weight="400">
-        <text x="230.0" y="100.0" font-size="28" dy="0.35em">O</text>
-        <text x="127.2" y="179.6" font-size="18" dy="0.35em">H</text>
-        <text x="332.8" y="179.6" font-size="18" dy="0.35em">H</text>
+        <text x="230.0" y="110.0" font-size="24" dy="0.35em">O</text>
+        <text x="132.0" y="185.9" font-size="15" dy="0.35em">H</text>
+        <text x="328.0" y="185.9" font-size="15" dy="0.35em">H</text>
       </g>
     </svg>
   </figure>
