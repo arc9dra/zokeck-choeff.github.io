@@ -27,6 +27,9 @@
        muted  #5c5c5c on #f4f3ef =  6.02:1  (passes AA)
        rule   #c9c7c0 on #f4f3ef =  1.52:1  (hairlines only,
               never text - it is not required to pass)      */
+  /* Fixed light grey stays readable over the blueprint's dark image in both modes. */
+  --blueprint-credit: #b0b0b0;
+  --draft-tracking: 0.16em;
   --paper:  #f4f3ef;
   --ink:    #111111;
   --muted:  #5c5c5c;
@@ -376,8 +379,8 @@ figure img {
    mechanism: visually hidden but still reachable by keyboard, with the
    <label> as its button. :checked decides which image and which word
    are shown, so the toggle needs no script.
-   Both files sit within a thousandth of the same aspect ratio and both
-   take .upright, so they occupy an identical box - the page does not
+   Both files sit within a thousandth of the same aspect ratio and share
+   an .upright figure, so they occupy an identical box - the page does not
    shift when they trade. */
 .swap__switch {
   position: absolute;
@@ -399,13 +402,22 @@ figure img {
 .swap__switch:checked ~ .swap .swap__a { display: none; }
 .swap__switch:checked ~ .swap .swap__b { display: block; }
 
-/* A quiet software credit beneath the Buddha blueprint. Visibility
-   preserves its space so toggling the image does not move the controls. */
+/* The figure follows the image's width, anchoring the software credit
+   inside its bottom-right corner. The credit shares the button's drafting
+   typography and appears only in blueprint view without occupying space. */
+.swap--buddha { position: relative; }
+
 .swap__software {
+  position: absolute;
+  right: var(--s-2);
+  bottom: var(--s-2);
   visibility: hidden;
-  margin-top: var(--s-1);
-  color: var(--muted);
+  color: var(--blueprint-credit);
+  font-family: var(--font-draft);
   font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--draft-tracking);
+  pointer-events: none;
 }
 
 .swap__switch:checked ~ .swap .swap__software { visibility: visible; }
@@ -424,7 +436,7 @@ figure img {
   font-family: var(--font-draft);
   font-size: var(--t-micro);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--draft-tracking);
   cursor: pointer;
   user-select: none;             /* a double-click should not select the word */
   transition: color 200ms ease-out, border-color 200ms ease-out;
