@@ -91,6 +91,13 @@
   --measure: 68ch;      /* line length, held to 45-75 chars */
   --page:    68rem;     /* the centered column               */
 
+  /* Embedded video and History reuse the project's column and spacing. */
+  --video-padding: 56.25%; /* 16:9, including browsers without aspect-ratio */
+  --line: 1px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  --touch-target: 2.75rem;
+
   /* --- the backdrop drawing --------------------------------
      Opacity is a token so the drawing can be tuned or killed
      from one line. It has to stay low enough that it never
@@ -420,6 +427,46 @@ figure img {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
+
+/* --- Grasslands video and development history ----------------------
+   The ratio wrapper reserves space before YouTube loads. Native details
+   keeps History operable offline, by keyboard and touch, without script.
+   Both sections follow the existing column and type; History has no rules. */
+.project-video { margin-top: var(--s-5); }
+
+.project-video__frame {
+  position: relative;
+  height: 0;
+  padding-bottom: var(--video-padding);
+  background: var(--ink);
+}
+
+.project-video__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: var(--line) solid var(--rule);
+}
+
+.project-history {
+  margin-top: var(--s-4);
+}
+
+.project-history summary {
+  min-height: var(--touch-target);
+  padding-block: var(--s-2);
+  font-family: var(--font-display);
+  cursor: pointer;
+}
+
+.project-history summary:focus-visible {
+  outline: var(--focus-width) solid var(--ink);
+  outline-offset: var(--focus-offset);
+}
+
+.project-history[open] { padding-bottom: var(--s-3); }
+.project-history figure:first-of-type { margin-top: var(--s-1); }
 
 /* --- opening a drawing at full resolution --------------------------
    The page shows these small; the files are 4000px+ wide. Rather than
