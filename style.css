@@ -399,6 +399,17 @@ figure img {
 .swap__switch:checked ~ .swap .swap__a { display: none; }
 .swap__switch:checked ~ .swap .swap__b { display: block; }
 
+/* A quiet software credit beneath the Buddha blueprint. Visibility
+   preserves its space so toggling the image does not move the controls. */
+.swap__software {
+  visibility: hidden;
+  margin-top: var(--s-1);
+  color: var(--muted);
+  font-size: var(--t-micro);
+}
+
+.swap__switch:checked ~ .swap .swap__software { visibility: visible; }
+
 /* the button says what you will GET, not what you are looking at */
 .swap__word--b { display: none; }
 .swap__switch:checked ~ .swap__button .swap__word--a { display: none; }
