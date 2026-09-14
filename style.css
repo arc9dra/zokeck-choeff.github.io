@@ -519,11 +519,8 @@ figure img {
 .project-history[open] { padding-bottom: var(--s-3); }
 .project-history figure:first-of-type { margin-top: var(--s-1); }
 
-/* --- opening a drawing at full resolution --------------------------
-   The page shows these small; the files are 4000px+ wide. Rather than
-   lose that, every drawing is a link to itself at full size. :target
-   does the whole thing - no script, and the browser Back button closes
-   it, so you can never be stranded inside a picture.                  */
+/* Fit the whole drawing below its controls, with original files still
+   accessible for inspecting details. :target opens the viewer. */
 .zoom {
   display: block;
   cursor: zoom-in;
@@ -540,31 +537,55 @@ figure img {
   text-align: center;
 }
 
-.viewer:target { display: block; }
+.viewer:target {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--s-2);
+}
+
+.viewer > .zoom {
+  min-width: 0;
+  min-height: 0;
+}
 
 .viewer img {
+  display: block;
+  width: 100%;
   max-width: 100%;
-  height: auto;
-  margin-top: var(--s-3);
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
 }
 
 .viewer__close {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  width: var(--touch-target);
+  height: var(--touch-target);
   color: var(--ink);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   text-decoration: none;
-  padding: var(--s-1) var(--s-2);
-  border: 1px solid var(--ink);
 }
 
-.viewer__close:hover { color: var(--ink); border-color: var(--ink); }
+.viewer__close svg {
+  width: var(--s-3);
+  height: var(--s-3);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.viewer__close:hover { color: var(--muted); }
 
 .viewer__original {
-  display: inline-block;
-  margin: var(--s-1) var(--s-2);
-  color: var(--ink);
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  color: var(--muted);
   font-size: var(--t-micro);
 }
 
