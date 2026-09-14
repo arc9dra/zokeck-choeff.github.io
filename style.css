@@ -390,11 +390,8 @@ figure img {
   pointer-events: none;
 }
 
-/* The Grasslands pair are different shapes - 1.71 wide against 1.27 -
-   so the slot is pinned to the main image's proportion and the
-   experiment letterboxes inside it. Without this the page jumped about
-   340px every time the button was pressed. The Buddha pair need none of
-   this: those two are within a thousandth of each other. */
+/* Keep the garden and cave in the main image's proportions, showing
+   each complete image without cropping or moving the content below. */
 .swap--grasslands { aspect-ratio: 1800 / 1081; }
 .swap--grasslands img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -443,6 +440,31 @@ figure img {
 }
 
 .swap__button:hover { color: var(--ink); border-color: var(--ink); }
+
+/* A hollow circle for the garden, filled for the cave. The invisible
+   checkbox supplies its accessible name, state, and keyboard behavior. */
+.swap__button--circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+.swap__circle {
+  width: var(--s-3);
+  height: var(--s-3);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.swap__button--circle:hover { background: var(--crack-faint); }
+.swap__switch:checked ~ .swap__button--circle .swap__circle { fill: currentColor; }
 
 /* the checkbox is invisible, so its focus ring has to land on the
    label instead - a keyboard user must still see where they are */
@@ -548,6 +570,12 @@ figure img {
   margin-inline: 0;
   padding-top: 0;
   text-align: right;
+}
+
+.site-foot--flow {
+  position: static;
+  max-width: var(--page);
+  margin-inline: auto;
 }
 
 .credit {

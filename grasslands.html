@@ -24,23 +24,23 @@
 
     <h1>Grasslands: Tiny World</h1>
 
-      <!-- Two views of the same garden, one slot - the same checkbox
-           mechanism as the Buddha page. Visually hidden but focusable,
-           the <label> is the button, :checked swaps image and word. No
-           script. Unlike the Buddha pair these two are different shapes,
-           so the slot is pinned to a ratio - see .swap--grasslands. -->
-      <input class="swap__switch" type="checkbox" id="grasslands-experiment">
+      <!-- The circle toggles between garden and cave without JavaScript.
+           A fixed image slot keeps the page steady in both views. -->
+      <input class="swap__switch" type="checkbox" id="grasslands-experiment"
+             aria-label="Show cave view">
 
       <figure class="swap swap--grasslands">
         <img class="swap__a" src="media/grasslands_01.jpg"
              alt="A screenshot from the game, taken at insect height: blades of grass tower over the camera, a fence and a pale-leaved tree stand against a bright blue sky with heavy cumulus cloud, and a mound of bare earth rises behind the grass to the right.">
-        <img class="swap__b" src="media/grasslands_02.jpg"
-             alt="The same garden open in the editor mid-experiment: the grass rendered as tall translucent bands of rainbow colour, with the move gizmo and a selection outline drawn over the ground.">
+        <img class="swap__b" src="media/cave.PNG" width="1722" height="978"
+             alt="An underground ant cave with dark tunnels, large ants, and glowing turquoise mushrooms and crystals.">
       </figure>
 
-      <label class="swap__button" for="grasslands-experiment">
-        <span class="swap__word swap__word--a">Experiment</span>
-        <span class="swap__word swap__word--b">Main</span>
+      <label class="swap__button swap__button--circle" for="grasslands-experiment"
+             title="Switch between garden and cave">
+        <svg class="swap__circle" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="8"/>
+        </svg>
       </label>
 
     <p class="abstract">
@@ -71,6 +71,18 @@
     <details class="project-history">
       <summary>History</summary>
       <figure>
+        <a class="zoom" href="media/earlywork.PNG">
+          <img src="media/earlywork.PNG" width="1638" height="982" loading="lazy"
+               alt="Early Grasslands garden scene with a pond, dense plants, a glass-walled building, and a wooden climbing tower.">
+        </a>
+      </figure>
+      <figure>
+        <a class="zoom" href="media/earlywork2.PNG">
+          <img src="media/earlywork2.PNG" width="1496" height="986" loading="lazy"
+               alt="Early Grasslands kitchen model viewed from above, with tiled counters, cabinets, windows, and unfinished surrounding terrain.">
+        </a>
+      </figure>
+      <figure>
         <a class="zoom" href="media/grasslands_03.png">
           <img src="media/grasslands_03.png" width="2592" height="1658" loading="lazy"
                alt="Grasslands development history in Unity Version Control, listing changes to the pond, movement, VR controls, dog interactions, and rideable beetle.">
@@ -88,7 +100,7 @@
 
 </main>
 
-<footer class="site-foot">
+<footer class="site-foot site-foot--flow">
   <p class="credit">&copy; Zo Keck-Choeff 2026</p>
 </footer>
 
