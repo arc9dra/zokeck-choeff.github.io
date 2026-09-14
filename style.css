@@ -441,8 +441,7 @@ figure img {
 
 .swap__button:hover { color: var(--ink); border-color: var(--ink); }
 
-/* A hollow circle for the garden, filled for the cave. The invisible
-   checkbox supplies its accessible name, state, and keyboard behavior. */
+/* Each alternate view has a circle, filled while that view is active. */
 .swap__button--circle {
   display: inline-flex;
   align-items: center;
@@ -452,6 +451,7 @@ figure img {
   padding: 0;
   border: 0;
   border-radius: 50%;
+  background: transparent;
   color: var(--ink);
 }
 
@@ -464,7 +464,13 @@ figure img {
 }
 
 .swap__button--circle:hover { background: var(--crack-faint); }
-.swap__switch:checked ~ .swap__button--circle .swap__circle { fill: currentColor; }
+.swap__button--circle[aria-pressed="true"] .swap__circle { fill: currentColor; }
+.swap__button--circle:focus-visible {
+  outline: var(--focus-width) solid var(--ink);
+  outline-offset: var(--focus-offset);
+}
+.swap--grasslands img:not([hidden]) { display: block; }
+.swap--grasslands img[hidden] { display: none; }
 
 /* the checkbox is invisible, so its focus ring has to land on the
    label instead - a keyboard user must still see where they are */
@@ -555,6 +561,13 @@ figure img {
 
 .viewer__close:hover { color: var(--ink); border-color: var(--ink); }
 
+.viewer__original {
+  display: inline-block;
+  margin: var(--s-1) var(--s-2);
+  color: var(--ink);
+  font-size: var(--t-micro);
+}
+
 /* ============================================================
    FOOTER - a credit, nothing more
    ============================================================ */
@@ -611,4 +624,17 @@ figure img {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; }
+}
+
+/* Keep early-map labels legible over both light and dark image details. */
+.history-early { position: relative; }
+.history-early figcaption {
+  position: absolute;
+  top: var(--s-1);
+  left: var(--s-1);
+  padding: 0.25rem var(--s-1);
+  color: #c0c0c0;
+  background: rgb(17 17 17 / 85%);
+  font-size: var(--t-micro);
+  pointer-events: none;
 }

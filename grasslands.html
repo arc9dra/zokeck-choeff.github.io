@@ -24,24 +24,32 @@
 
     <h1>Grasslands: Tiny World</h1>
 
-      <!-- The circle toggles between garden and cave without JavaScript.
-           A fixed image slot keeps the page steady in both views. -->
-      <input class="swap__switch" type="checkbox" id="grasslands-experiment"
-             aria-label="Show cave view">
-
+      <!-- Each circle toggles its view; pressing it again returns to the garden. -->
       <figure class="swap swap--grasslands">
-        <img class="swap__a" src="media/grasslands_01.jpg"
+        <img class="swap__a" id="grasslands-main" src="media/grasslands_01.jpg"
              alt="A screenshot from the game, taken at insect height: blades of grass tower over the camera, a fence and a pale-leaved tree stand against a bright blue sky with heavy cumulus cloud, and a mound of bare earth rises behind the grass to the right.">
-        <img class="swap__b" src="media/cave.PNG" width="1722" height="978"
+        <img class="swap__b" id="grasslands-cave" hidden src="media/cave.PNG" width="1722" height="978"
              alt="An underground ant cave with dark tunnels, large ants, and glowing turquoise mushrooms and crystals.">
+        <img class="swap__map" id="grasslands-map" hidden src="media/fullmap.PNG" width="1732" height="846"
+             alt="An elevated overview of the Grasslands map: a fenced garden with dense grass, a vegetable patch, a slide, and a building at the far end.">
       </figure>
 
-      <label class="swap__button swap__button--circle" for="grasslands-experiment"
-             title="Switch between garden and cave">
+      <button class="swap__button swap__button--circle" type="button"
+              data-view="map" aria-label="Show full map view" aria-pressed="false"
+              aria-controls="grasslands-main grasslands-map grasslands-cave"
+              title="Toggle full map view">
         <svg class="swap__circle" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle cx="12" cy="12" r="8"/>
         </svg>
-      </label>
+      </button>
+      <button class="swap__button swap__button--circle" type="button"
+              data-view="cave" aria-label="Show cave view" aria-pressed="false"
+              aria-controls="grasslands-main grasslands-map grasslands-cave"
+              title="Toggle cave view">
+        <svg class="swap__circle" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="8"/>
+        </svg>
+      </button>
 
     <p class="abstract">
       I worked on developing a Virtual Reality game using Unity engine.
@@ -70,13 +78,15 @@
          without JavaScript. Linked originals keep small UI text readable. -->
     <details class="project-history">
       <summary>History</summary>
-      <figure>
+      <figure class="history-early">
+        <figcaption>Early Version of Map</figcaption>
         <a class="zoom" href="media/earlywork.PNG">
           <img src="media/earlywork.PNG" width="1638" height="982" loading="lazy"
                alt="Early Grasslands garden scene with a pond, dense plants, a glass-walled building, and a wooden climbing tower.">
         </a>
       </figure>
-      <figure>
+      <figure class="history-early">
+        <figcaption>Early Version of Map</figcaption>
         <a class="zoom" href="media/earlywork2.PNG">
           <img src="media/earlywork2.PNG" width="1496" height="986" loading="lazy"
                alt="Early Grasslands kitchen model viewed from above, with tiled counters, cabinets, windows, and unfinished surrounding terrain.">
@@ -103,6 +113,20 @@
 <footer class="site-foot site-foot--flow">
   <p class="credit">&copy; Zo Keck-Choeff 2026</p>
 </footer>
+
+<script>
+  const viewButtons = document.querySelectorAll('button[data-view]');
+  const views = document.querySelectorAll('.swap--grasslands img');
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selected = button.getAttribute('aria-pressed') === 'true' ? 'main' : button.dataset.view;
+      views.forEach(view => { view.hidden = view.id !== `grasslands-${selected}`; });
+      viewButtons.forEach(control => {
+        control.setAttribute('aria-pressed', String(control.dataset.view === selected));
+      });
+    });
+  });
+</script>
 
 </body>
 </html>

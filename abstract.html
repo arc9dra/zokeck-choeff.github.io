@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abstract Collection - Zo Keck-Choeff</title>
-  <meta name="description" content="Abstract Collection - dense all-over pen drawings on a spiral sketchpad.">
+  <meta name="description" content="Abstract Collection - five scanned abstract pen drawings.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,34 +24,30 @@
 
     <h1>Abstract Collection</h1>
 
-      <!-- Every drawing opens at full resolution: the page shows them
-           at column width, so a way back to the real file has to exist.
-           See .viewer - CSS only, no script. -->
-
-      <!-- All four sheets stacked down the column, each at the full
-           measure. The files are 4000px+ wide against a 1088px column,
-           so every one is displayed well under its native resolution
-           and stays sharp. No carousel: a stack shows all four at once
-           and needs no gesture to work. -->
-
-      <figure>
+      <!-- Full-resolution, lossless scans in PDF page order. -->
+      <figure id="drawing-01">
         <a class="zoom" href="#view-01">
-          <img src="media/abstract_01.jpg" alt="A spiral-bound sketchpad page covered edge to edge in dense black pen marks, with a darker knot of overdrawn line gathering near the centre and thinning out toward the margins.">
+          <img src="media/abstract_scan_01.png" width="2369" height="1848" alt="Abstract pen drawing with dense interlocking forms and a dark central cluster spreading across the page.">
         </a>
       </figure>
-      <figure>
+      <figure id="drawing-02">
         <a class="zoom" href="#view-02">
-          <img src="media/abstract_02.jpg" alt="Pen drawing on a sketchpad page: an all-over field of small linked forms radiating outward, with a heavy black mass worked into the lower left corner.">
+          <img src="media/abstract_scan_02.png" width="2398" height="1879" loading="lazy" alt="Abstract pen drawing with looping organic figures, fine lines, and dark clusters along one edge and near the centre.">
         </a>
       </figure>
-      <figure>
+      <figure id="drawing-03">
         <a class="zoom" href="#view-03">
-          <img src="media/abstract_03.jpg" alt="Pen drawing on a sketchpad page: an even all-over field of small creature-like figures and loops, densest through the middle band.">
+          <img src="media/abstract_scan_03.png" width="2414" height="1869" loading="lazy" alt="Abstract pen drawing of angular creature-like shapes, dotted trails, and open spaces between fine lines.">
         </a>
       </figure>
-      <figure>
+      <figure id="drawing-04">
         <a class="zoom" href="#view-04">
-          <img src="media/abstract_04.jpg" alt="Pen drawing on a sketchpad page: spiky angular forms scattered across the sheet, opening into a lighter clearing left of centre.">
+          <img src="media/abstract_scan_04.png" width="2173" height="1670" loading="lazy" alt="Abstract pen drawing with scattered geometric and organic forms, jagged edges, and looping linework.">
+        </a>
+      </figure>
+      <figure id="drawing-05">
+        <a class="zoom" href="#view-05">
+          <img src="media/abstract_scan_05.png" width="2174" height="1689" loading="lazy" alt="Abstract pen drawing with intricate branching shapes and several dense knots of black linework.">
         </a>
       </figure>
 
@@ -65,24 +61,44 @@
     </p>
   </article>
 
-  <div class="viewer" id="view-01">
-    <a class="viewer__close" href="#main">Close</a>
-    <img src="media/abstract_01.jpg" alt="A spiral-bound sketchpad page covered edge to edge in dense black pen marks, with a darker knot of overdrawn line gathering near the centre and thinning out toward the margins.">
+  <div class="viewer" id="view-01" role="region" aria-label="Drawing 1 enlarged">
+    <a class="viewer__close" href="#drawing-01">Close</a>
+    <a class="viewer__original" href="media/abstract_scan_01.png">Open full-resolution image</a>
+    <a class="zoom" href="media/abstract_scan_01.png" aria-label="Open drawing 1 at full resolution">
+      <img src="media/abstract_scan_01.png" width="2369" height="1848" loading="lazy" alt="Abstract pen drawing with dense interlocking forms and a dark central cluster spreading across the page.">
+    </a>
   </div>
 
-  <div class="viewer" id="view-02">
-    <a class="viewer__close" href="#main">Close</a>
-    <img src="media/abstract_02.jpg" alt="Pen drawing on a sketchpad page: an all-over field of small linked forms radiating outward, with a heavy black mass worked into the lower left corner.">
+  <div class="viewer" id="view-02" role="region" aria-label="Drawing 2 enlarged">
+    <a class="viewer__close" href="#drawing-02">Close</a>
+    <a class="viewer__original" href="media/abstract_scan_02.png">Open full-resolution image</a>
+    <a class="zoom" href="media/abstract_scan_02.png" aria-label="Open drawing 2 at full resolution">
+      <img src="media/abstract_scan_02.png" width="2398" height="1879" loading="lazy" alt="Abstract pen drawing with looping organic figures, fine lines, and dark clusters along one edge and near the centre.">
+    </a>
   </div>
 
-  <div class="viewer" id="view-03">
-    <a class="viewer__close" href="#main">Close</a>
-    <img src="media/abstract_03.jpg" alt="Pen drawing on a sketchpad page: an even all-over field of small creature-like figures and loops, densest through the middle band.">
+  <div class="viewer" id="view-03" role="region" aria-label="Drawing 3 enlarged">
+    <a class="viewer__close" href="#drawing-03">Close</a>
+    <a class="viewer__original" href="media/abstract_scan_03.png">Open full-resolution image</a>
+    <a class="zoom" href="media/abstract_scan_03.png" aria-label="Open drawing 3 at full resolution">
+      <img src="media/abstract_scan_03.png" width="2414" height="1869" loading="lazy" alt="Abstract pen drawing of angular creature-like shapes, dotted trails, and open spaces between fine lines.">
+    </a>
   </div>
 
-  <div class="viewer" id="view-04">
-    <a class="viewer__close" href="#main">Close</a>
-    <img src="media/abstract_04.jpg" alt="Pen drawing on a sketchpad page: spiky angular forms scattered across the sheet, opening into a lighter clearing left of centre.">
+  <div class="viewer" id="view-04" role="region" aria-label="Drawing 4 enlarged">
+    <a class="viewer__close" href="#drawing-04">Close</a>
+    <a class="viewer__original" href="media/abstract_scan_04.png">Open full-resolution image</a>
+    <a class="zoom" href="media/abstract_scan_04.png" aria-label="Open drawing 4 at full resolution">
+      <img src="media/abstract_scan_04.png" width="2173" height="1670" loading="lazy" alt="Abstract pen drawing with scattered geometric and organic forms, jagged edges, and looping linework.">
+    </a>
+  </div>
+
+  <div class="viewer" id="view-05" role="region" aria-label="Drawing 5 enlarged">
+    <a class="viewer__close" href="#drawing-05">Close</a>
+    <a class="viewer__original" href="media/abstract_scan_05.png">Open full-resolution image</a>
+    <a class="zoom" href="media/abstract_scan_05.png" aria-label="Open drawing 5 at full resolution">
+      <img src="media/abstract_scan_05.png" width="2174" height="1689" loading="lazy" alt="Abstract pen drawing with intricate branching shapes and several dense knots of black linework.">
+    </a>
   </div>
 
 </main>
